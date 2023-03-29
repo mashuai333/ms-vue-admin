@@ -1,0 +1,70 @@
+:root {
+  --el-menu-item-height: 50px !important;
+  --el-menu-horizontal-sub-item-height: 40px;
+  // --el-menu-item-font-size: 16px;
+  --el-menu-active-color: #409eff;
+  --el-menu-text-color: #303133;
+  --el-menu-bg-color: #ffffff;
+}
+
+#app {
+  .main-container {
+    height: calc(100vh - 50px);
+    background: #f6f6f6;
+    position: relative;
+  }
+
+  .el-menu-horizontal {
+    // width: 750px;
+
+    // 菜单激活
+    .el-menu-item.is-active {
+      border-bottom: 2px solid $menuActiveLine;
+      // color: $activeTextColor;
+    }
+
+    .el-sub-menu.is-active .el-sub-menu__title {
+      border-bottom: 2px solid $menuActiveLine;
+      // color: $activeTextColor;
+    }
+  }
+
+  .scrollbar-wrapper {
+    overflow-y: hidden !important;
+  }
+
+  // .el-menu-item {
+  //   &:hover {
+  //     background-color: $menuHover;
+  //     border-bottom: 3px solid $menuActiveLine;
+  //     color: #fff;
+  //   }
+  // }
+
+  // .el-menu--horizontal .el-menu-item:not(.is-disabled):focus {
+  //   background-color: #fff;
+  // }
+}
+
+// 横向弹框的
+.el-menu--popup {
+  min-width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  //   .el-menu-item {
+  //     height: 40px;
+  //     line-height: 40px;
+
+  // &:hover {
+  //   background-color: $menuHover !important;
+  //   color: #fff !important;
+  // }
+  //   }
+}
+
+// 菜单激活
+// .el-menu-item.is-active {
+//   background: $menuActiveBg;
+//   color: $menuActiveText;
+// }

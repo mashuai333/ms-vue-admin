@@ -1,0 +1,45 @@
+.el-button--primary.is-plain {
+  --el-button-bg-color: #fff;
+}
+
+.el-dialog {
+
+  // 统一给所有弹框加上下划线
+  .el-dialog__header {
+    padding: 16px;
+    margin: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    .el-dialog__title {
+      font-size: 14px;
+      color: #323233;
+      font-weight: bold;
+    }
+  }
+
+  .el-dialog__body {
+    padding: 16px;
+  }
+}
+
+.el-message-box {
+  .el-message-box__header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    .el-message-box__title {
+      font-size: 14px;
+      color: #323233;
+      font-weight: bold;
+    }
+  }
+
+  .el-message-box__content {
+    padding: 16px;
+  }
+}
+
+// 弹框出现 右侧滚动条距离
+.el-popup-parent--hidden {
+  padding-right: 0 !important;
+  width: 100% !important;
+}
