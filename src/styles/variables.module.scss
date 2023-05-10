@@ -1,13 +1,11 @@
 $themePrimary: #409eff;
 // header
-$headBg: #ffffff;
+$headBg: #0c193d;
 
-
-$backgroundColor: #ffffff; //菜单背景颜色
-$textColor: #303133; //菜单文字颜色
-$activeTextColor: #409eff; //激活的菜单颜色
-$menuActiveLine: #308ce7; //激活菜单下划线
-
+// $backgroundColor: #0C193D; //菜单背景颜色
+// $textColor: #303133; //菜单文字颜色
+$activeTextColor: #ffffff; //激活的菜单颜色
+// $menuActiveLine: #308ce7; //激活菜单下划线
 
 // $menuHover: #8ec2f6; //菜单hover
 // $menuActiveBg: #4d9b98;
@@ -15,16 +13,15 @@ $menuActiveLine: #308ce7; //激活菜单下划线
 // $subMenuBg: #ffffff;
 // $subMenuHover: #4d9b98;
 
-
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
   themePrimary: $themePrimary;
   headBg: $headBg;
-  backgroundColor: $backgroundColor;
-  textColor: $textColor;
+  // backgroundColor: $backgroundColor;
+  // textColor: $textColor;
   activeTextColor: $activeTextColor;
-  menuActiveLine: $menuActiveLine;
+  // menuActiveLine: $menuActiveLine;
   // menuHover: $menuHover;
   // menuActiveBg: $menuActiveBg;
   // subMenuActiveText: $subMenuActiveText;

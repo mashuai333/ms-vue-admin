@@ -1,5 +1,5 @@
 <template>
-  <div id="container" class="map-container"></div>
+  <div id="container" class="map-container" />
   <!-- <div class="input-card">
       <h4>左击获取经纬度：</h4>
       <div class="input-item">
@@ -9,27 +9,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch, shallowRef } from "vue";
+import { onMounted, watch, shallowRef } from 'vue'
 // import { shallowRef } from '@vue/reactivity'
-import AMapLoader from "@amap/amap-jsapi-loader";
+import AMapLoader from '@amap/amap-jsapi-loader'
 const props = defineProps({
   setSymbol: {
     //各种类型的渲染数据
     type: Object
   }
-});
+})
 
 watch(
   () => props.setSymbol,
   data => {
-    console.log(data, "aaaaaaa");
-    setSymbol(data);
+    setSymbol(data)
   }
-);
+)
 
 onMounted(() => {
-  initMap();
-});
+  initMap()
+})
 
 const railWayCoorMap = [
   [111.19456, 39.892641],
@@ -131,26 +130,26 @@ const railWayCoorMap = [
   [113.338204, 40.230322],
   [113.31262, 40.177421],
   [113.338258, 40.141221]
-];
-var _AMap = null;
-var map = shallowRef(null);
+]
+let _AMap = null
+const map = shallowRef(null)
 
 const initMap = () => {
   AMapLoader.load({
-    key: "28968ecc6b8ed80e64342daf5d16c006", // 申请好的Web端开发者Key，首次调用 load 时必填
-    version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+    key: '28968ecc6b8ed80e64342daf5d16c006', // 申请好的Web端开发者Key，首次调用 load 时必填
+    version: '2.0', // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
     //   plugins: ["AMap.Scale", "AMap.ToolBar", "AMap.MapType"] // 需要使用的的插件列表，如比例尺'AMap.Scale'等
     plugins: [] // 需要使用的的插件列表，如比例尺'AMap.Scale'等
   })
     .then(AMap => {
-      _AMap = AMap;
-      map = new AMap.Map("container", {
+      _AMap = AMap
+      map.value = new AMap.Map('container', {
         zoom: 9, //级别
         center: [112.32, 40.05], //中心点坐标
-        mapStyle: "amap://styles/darkblue",
-        viewMode: "3D" //使用3D视图
+        mapStyle: 'amap://styles/darkblue',
+        viewMode: '3D' //使用3D视图
         // pitch: 45
-      });
+      })
       // map.addControl(new AMap.Scale());
       // map.addControl(new AMap.ToolBar());
       // map.addControl(new AMap.MapType());
@@ -167,38 +166,38 @@ const initMap = () => {
       // map.add(viaMarker);
 
       //   添加线路
-      var polyline = new AMap.Polyline({
+      const polyline = new AMap.Polyline({
         path: railWayCoorMap, //设置线覆盖物路径
-        strokeColor: "#ffffff", //线颜色
+        strokeColor: '#ffffff', //线颜色
         strokeWeight: 16, //线宽
-        strokeStyle: "solid", //线样式
+        strokeStyle: 'solid', //线样式
         zIndex: 11
-      });
-      var polyline1 = new AMap.Polyline({
+      })
+      const polyline1 = new AMap.Polyline({
         path: railWayCoorMap, //设置线覆盖物路径
-        strokeColor: "#000000", //线颜色
+        strokeColor: '#000000', //线颜色
         strokeWeight: 16, //线宽
-        strokeStyle: "solid", //线样式
+        strokeStyle: 'solid', //线样式
         zIndex: 10
-      });
-      map.add([polyline, polyline1]);
+      })
+      map.value.add([polyline, polyline1])
 
       // 多边形轮廓线的节点坐标数组
-      var path = [
+      const path = [
         new AMap.LngLat(111.292078, 39.840971),
         new AMap.LngLat(111.294739, 39.842972),
         new AMap.LngLat(111.298288, 39.840631),
         new AMap.LngLat(111.295072, 39.839524)
-      ];
+      ]
 
-      var polygon = new AMap.Polygon({
+      const polygon = new AMap.Polygon({
         path: path,
-        fillColor: "#fff", // 多边形填充颜色
+        fillColor: '#fff', // 多边形填充颜色
         borderWeight: 2, // 线条宽度，默认为 1
-        strokeColor: "blue" // 线条颜色
-      });
+        strokeColor: 'blue' // 线条颜色
+      })
 
-      map.add(polygon);
+      map.value.add(polygon)
       //   AMap.plugin(["AMap.ControlBar"], function () {
       //     // 添加 3D 罗盘控制
       //     map.addControl(
@@ -212,63 +211,64 @@ const initMap = () => {
       //     );
       //   });
       //为地图注册click事件获取鼠标点击出的经纬度坐标
-      map.on("click", function (e) {
+      map.value.on('click', function (e) {
         // document.getElementById("lnglat")["value"] =
         //   e.lnglat.getLng() + "," + e.lnglat.getLat();
-        console.log(e, "cur");
-        console.log(e.lnglat.getLng() + "," + e.lnglat.getLat());
-      });
+        console.log(e, 'cur')
+        console.log(e.lnglat.getLng() + ',' + e.lnglat.getLat())
+      })
     })
     .catch(e => {
-      console.log(e);
-    });
-};
+      console.log(e)
+    })
+}
 
-const markerList = [];
+const markerList = []
 
 // 实例化点标记
 function addMarker(item) {
-  console.log(item, "item");
+  console.log(item, 'item')
   // 点标记显示内容，HTML要素字符串
   // let markerContent = `<div class="custom-content-marker">${item.name}</div>`;
-  let marker = new _AMap.Marker({
+  const marker = new _AMap.Marker({
     // content: markerContent,
-    icon: "//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png",
+    icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png',
     position: item.value,
     title: item.name,
     offset: new _AMap.Pixel(-13, -30)
-  });
+  })
   // 设置鼠标划过点标记显示的文字提示
-  marker.setTitle(item.name);
-  marker.setMap(map);
-  markerList.push(marker);
+  marker.setTitle(item.name)
+  marker.setMap(map)
+  markerList.push(marker)
 }
 // 清除 marker
 const clearMarker = () => {
   if (markerList && markerList.length) {
-    map.remove(markerList);
+    map.value.remove(markerList)
   }
-};
+}
 
 // 设置标记点
 const setSymbol = data => {
   if (data.isRender) {
     if (data.list && data.list.length) {
       for (let i = 0; i < data.list.length; i++) {
-        const item = data.list[i];
-        addMarker(item);
+        const item = data.list[i]
+        addMarker(item)
       }
     }
   } else {
-    clearMarker();
+    clearMarker()
   }
-};
+}
 </script>
 
 <style lang="scss">
 .amap-logo {
   display: none !important;
 }
+
 .amap-copyright {
   bottom: -100px;
   display: none !important;
@@ -286,17 +286,16 @@ const setSymbol = data => {
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border-radius: 4px;
   width: 352px;
   border-width: 0;
   border-radius: 6.4px;
-  box-shadow: 0 2px 6px 0 rgba(114, 124, 245, 0.5);
+  box-shadow: 0 2px 6px 0 rgb(114 124 245 / 50%);
   position: fixed;
   top: 114px;
   right: 122px;
-  -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   padding: 12px 20px;
+
   .input-item {
     position: relative;
     display: flex;

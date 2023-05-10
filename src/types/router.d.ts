@@ -1,5 +1,5 @@
-import { defineComponent } from "vue";
-import { type RouteRecordRaw, type RouteLocationNormalized } from "vue-router";
+import { defineComponent } from 'vue'
+import { type RouteRecordRaw, type RouteLocationNormalized } from 'vue-router'
 
 /**
 * redirect: noredirect        当设置 noredirect 的时候该路由在面包屑导航中不可被点击
@@ -15,35 +15,36 @@ import { type RouteRecordRaw, type RouteLocationNormalized } from "vue-router";
     icon: 'svg-name'          设置该路由的图标
     affix: true               如果设置为true，则会一直固定在tag项中(默认 false)
     activeMenu: '/dashboard'  显示高亮的路由路径
+    breadcrumb: false         如果设置为false，则不会在breadcrumb面包屑中显示(默认 true)
+    frameSrc: 'url'           设置该路由的iframe地址
 
     noCache: true             如果设置为true，则不会被 <keep-alive> 缓存(默认 false)
-    breadcrumb: false         如果设置为false，则不会在breadcrumb面包屑中显示(默认 true)
     noTagsView: true          如果设置为true，则不会出现在tag中(默认 false)
     followAuth: '/dashboard'  跟随哪个路由进行权限过滤
     canTo: true               设置为true即使hidden为true，也依然可以进行路由跳转(默认 false)
   }
 **/
-declare module "vue-router" {
+declare module 'vue-router' {
   interface RouteMeta extends Record<string | number | symbol, unknown> {
-    title?: string;
-    icon?: string;
-    activeMenu?: string;
-    hidden?: boolean;
-    affix?: boolean;
-
-    alwaysShow?: boolean;
-    noCache?: boolean;
-    breadcrumb?: boolean;
-    noTagsView?: boolean;
-    followAuth?: string;
-    canTo?: boolean;
+    title?: string
+    icon?: string
+    activeMenu?: string
+    hidden?: boolean
+    affix?: boolean
+    breadcrumb?: boolean
+    frameSrc?: string
+    alwaysShow?: boolean
+    noCache?: boolean
+    noTagsView?: boolean
+    followAuth?: string
+    canTo?: boolean
   }
 }
 
 type Component<T = any> =
   | ReturnType<typeof defineComponent>
-  | (() => Promise<typeof import("*.vue")>)
-  | (() => Promise<T>);
+  | (() => Promise<typeof import('*.vue')>)
+  | (() => Promise<T>)
 
 declare global {
   /**
@@ -51,34 +52,35 @@ declare global {
    */
   interface toRouteType extends RouteLocationNormalized {
     meta: {
-      roles: Array<string>;
-      keepAlive?: boolean;
-    };
+      roles: Array<string>
+      keepAlive?: boolean
+    }
   }
 
-  declare interface AppCustomRouteRecordRaw
-    extends Omit<RouteRecordRaw, "meta"> {
-    name: string;
-    path: string;
-    meta?: RouteMeta;
-    component?: Component | string | Object;
-    redirect?: string;
-    children?: AppCustomRouteRecordRaw[];
+  declare interface AppCustomRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
+    name: string
+    path: string
+    meta?: RouteMeta
+    component?: Component | string | Object
+    redirect?: string
+    children?: AppCustomRouteRecordRaw[]
   }
 
   declare interface MenuListItem {
-    title: string; // 页面名称
-    path: string; // 页面路由
-    name: string; // 组件名称
-    redirect: string; // 重定向路由
-    icon: string; //组件图标
-    activeMenu: string; //激活父菜单路由
-    affix: boolean; //固定菜单
-    hidden: boolean; //隐藏菜单
-    component: string; //组件地址
-    sortIndex: number; // 排序
-    children: MenuListItem[]; //子菜单
-    parentId?: number;
-    id?: number;
+    title: string // 页面名称
+    path: string // 页面路由
+    name: string // 组件名称
+    affix: boolean //固定菜单
+    hidden: boolean //隐藏菜单
+    component: string //组件地址
+    sortIndex: number // 排序
+    children: MenuListItem[] //子菜单
+    redirect?: string // 重定向路由
+    icon?: string //组件图标
+    activeMenu?: string //激活父菜单路由
+    breadcrumb?: boolean
+    frameSrc?: string
+    parentId?: number
+    id?: number
   }
 }
