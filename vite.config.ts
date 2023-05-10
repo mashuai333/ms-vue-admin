@@ -59,7 +59,7 @@ export default ({ mode }) => {
       //   include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
       // })
     ],
-    base: mode === "production" ? `/${envConfig.VITE_OUTPUT_DIR}/` : "/",
+    base: "/",
     resolve: {
       // 导入时忽略的拓展名列表
       extensions: [
