@@ -65,12 +65,4 @@ pnpm run build:pro
 
 支持现代浏览器, 不支持 IE
 
-USE node > 16.x pnpm install pnpm run dev pnpm run build
-
-1. 安装 path 配置 alias 路径 pnpm install --save-dev @types/node pnpm install path
-
-2. 安装 commit 校验 (<https://commitlint.js.org/#/>) pnpm install -g @commitlint/cli @commitlint/config-conventional echo "module.exports = { extends: ['@commitlint/config-conventional'] };" > commitlint.config.js
-
-3. 安装 husky (<https://typicode.github.io/husky/#/?id=install>) pnpm install husky --save-dev npx husky add .husky/commit-msg 'pnpm commitlint --edit ${1}' npx husky add .husky/pre-commit "pnpm run lint:lint-staged"
-
-4. 安装 lint-staged(<https://github.com/okonet/lint-staged#readme>) pnpm install --save-dev lint-staged
+USE node > 16.x
