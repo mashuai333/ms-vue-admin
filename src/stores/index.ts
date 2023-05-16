@@ -9,3 +9,4 @@ export default {
     app.use(pinia)
   }
 }
+export { pinia }
