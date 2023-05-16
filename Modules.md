@@ -18,32 +18,50 @@ pnpm install husky --save-dev npx husky add .husky/commit-msg 'pnpm commitlint -
 
 pnpm install --save-dev lint-staged
 
+## 安装 svg
+
+pnpm install vite-svg-loader --save-dev
+
 ## 安装 svgo 压缩 svgo 文件
 
-配置 "svgo": "svgo -f src/icons/svg -o src/icons/svg" npm -g install svgo
+配置 "svgo": "svgo -f src/icons/svg -o src/icons/svg" pnpm -g install svgo
 
 ## 安装 eslint
 
-npm install --save-dev eslint eslint-plugin-vue npm install eslint vite-plugin-eslint --save-dev
+pnpm install --save-dev eslint eslint-plugin-vue pnpm install eslint vite-plugin-eslint --save-dev
 
 配置 "lint:eslint": "eslint --cache --max-warnings 0 \"{src,mock,build}/\*_/_.{vue,js,ts,tsx}\" --fix" 增加.eslintrc.js .eslintignore
 
 ## 安装 prettier
 
-npm install --save-dev --save-exact prettier npm install --save-dev eslint-config-prettier npm install --save-dev eslint-plugin-prettier npm install --save-dev @/vue/eslint-config-prettier 添加 .prettierignore .prettierrc.js 配置 "lint:prettier": "prettier --write \"src/\*_/_.{js,ts,json,tsx,css,less,scss,vue,html,md}\""
+pnpm install --save-dev --save-exact prettier pnpm install --save-dev eslint-config-prettier pnpm install --save-dev eslint-plugin-prettier pnpm install --save-dev @/vue/eslint-config-prettier 添加 .prettierignore .prettierrc.js 配置 "lint:prettier": "prettier --write \"src/\*_/_.{js,ts,json,tsx,css,less,scss,vue,html,md}\""
 
 ## 安装 stylelint
 
-npm i stylelint -D npm install --save-dev stylelint stylelint-config-standard npm install --save-dev stylelint stylelint-config-html npm install --save-dev stylelint stylelint-config-recommended 添加.stylelintignore stylelint.config.js 配置 "lint:stylelint": "stylelint --cache --fix \"\*_/_.{vue,css,scss,postcss,less}\" --cache --cache-location node_modules/.cache/stylelint/"
+pnpm i stylelint -D pnpm install --save-dev stylelint stylelint-config-standard pnpm install --save-dev stylelint stylelint-config-html pnpm install --save-dev stylelint stylelint-config-recommended 添加.stylelintignore stylelint.config.js 配置 "lint:stylelint": "stylelint --cache --fix \"\*_/_.{vue,css,scss,postcss,less}\" --cache --cache-location node_modules/.cache/stylelint/"
 
 ## 安装 typescrpit
 
-npm install --save-dev typescript npm add --dev @vue/eslint-config-typescript npm install --save-dev @typescript-eslint/eslint-plugin npm install --save-dev @typescript-eslint/parser 添加 tsconfig.json
+pnpm install --save-dev typescript pnpm add --dev @vue/eslint-config-typescript pnpm install --save-dev @typescript-eslint/eslint-plugin pnpm install --save-dev @typescript-eslint/parser 添加 tsconfig.json
 
 ## 安装 postcss
 
-npm install postcss –g npm i postcss-import -D npm i postcss-html -D npm i postcss-scss -D npm i cssnano -S npm i autoprefixer -g 添加 postcss.config.js
+pnpm install postcss –g pnpm i postcss-import -D pnpm i postcss-html -D pnpm i postcss-scss -D pnpm i cssnano -S pnpm i autoprefixer -g 添加 postcss.config.js
 
 ## 安装 vue-tsc
 
-npm install vue-tsc -d 配置 "typecheck": "tsc --noEmit && vue-tsc --noEmit --skipLibCheck",
+pnpm install vue-tsc -d 配置 "typecheck": "tsc --noEmit && vue-tsc --noEmit --skipLibCheck",
+
+## 安装 mock
+
+pnpm add mockjs pnpm add vite-plugin-mock -D pnpm install @types/mockjs --save-dev
+
+## 是否开启压缩
+
+npm i vite-plugin-compression -D
+
+## 安装 tailwindcss
+
+<https://tailwindcss.com/docs/installation> npm install -D tailwindcss npx tailwindcss init 配置 tailwind.config.js 增加 styles/tailwind.css
+
+npm install -D postcss-import 配置 postcss.config.js npm install -D autoprefixer 安装 cssnano 缩减器 npm install cssnano postcss --save-dev

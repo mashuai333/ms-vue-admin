@@ -97,3 +97,12 @@ export const getDayDuringOneMonth = (starDate, endDate) => {
     return false
   }
 }
+
+// 判断是否是数组
+export const isArray = (o: any) => {
+  let isArray = false
+  if (Object.prototype.toString.call(o) === '[object Array]') {
+    isArray = true
+  }
+  return isArray
+}

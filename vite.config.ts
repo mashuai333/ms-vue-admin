@@ -1,12 +1,10 @@
-import { defineConfig, loadEnv, type PluginOption } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import dayjs from "dayjs";
-import vue from "@vitejs/plugin-vue";
-import { visualizer } from "rollup-plugin-visualizer";
-import { svgBuilder } from "./src/plugins/svgBuilder";
 import { resolve } from "path";
 import pkg from "./package.json";
-import { viteBuildInfo } from './build/info'
-import { cdn } from "./build/cdn";
+import { warpperEnv } from "./build";
+import { getPluginsList } from "./build/plugins";
+
 // import AutoImport from 'unplugin-auto-import/vite'
 // import Components from 'unplugin-vue-components/vite'
 // import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
@@ -34,32 +32,32 @@ const __APP_INFO__ = {
   lastBuildTime: dayjs(new Date()).format("YYYYMMDDHHmmss"),
 };
 // https://vitejs.dev/config/
-export default ({ mode }) => {
+export default ({ command, mode }) => {
   // 根据当前工作目录中的 `mode` 加载 .env 文件
   // 设置第三个参数为 '' 来加载所有环境变量，而不管是否有 `VITE_` 前缀。
   // const envConfig = loadEnv(mode, "./");
   const envConfig = loadEnv(mode, root);
-  const lifecycle = process.env.npm_lifecycle_event;
+  const { VITE_CDN, VITE_PORT, VITE_COMPRESSION, VITE_PUBLIC_PATH } = warpperEnv(loadEnv(mode, root));
   return defineConfig({
-    plugins: [
-      vue(),
-      svgBuilder("./src/icons/svg/"), // 这里已经将src/icons/svg/下的svg全部导入，无需再单独导入
-      viteBuildInfo(),
-      envConfig.VITE_CDN == 'true' ? cdn : null,
-       // 打包分析
-      lifecycle === "report"
-        ? visualizer({ open: true, brotliSize: true, filename: "report.html" }) as unknown as PluginOption
-        : null
-      // AutoImport({
-      //   resolvers: [ElementPlusResolver()],
-      // }),
-      // Components({
-      //   resolvers: [ElementPlusResolver()],
-      //   dts: true,
-      //   include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-      // })
-    ],
-    base: "/",
+    base: VITE_PUBLIC_PATH,
+    // plugins: [
+    //   vue(),
+    //   svgBuilder("./src/icons/svg/"), // 这里已经将src/icons/svg/下的svg全部导入，无需再单独导入
+    //   viteBuildInfo(),
+    //   envConfig.VITE_CDN == 'true' ? cdn : null,
+    //    // 打包分析
+    //   lifecycle === "report"
+    //     ? visualizer({ open: true, brotliSize: true, filename: "report.html" }) as unknown as PluginOption
+    //     : null
+    //   // AutoImport({
+    //   //   resolvers: [ElementPlusResolver()],
+    //   // }),
+    //   // Components({
+    //   //   resolvers: [ElementPlusResolver()],
+    //   //   dts: true,
+    //   //   include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+    //   // })
+    // ],
     resolve: {
       // 导入时忽略的拓展名列表
       extensions: [
@@ -74,10 +72,15 @@ export default ({ mode }) => {
       ],
       alias,
     },
+    plugins: getPluginsList(command, VITE_CDN, VITE_COMPRESSION),
+    // 服务端渲染
     server: {
-      host: envConfig.VITE_HOST,
-      port: +envConfig.VITE_PORT,
+      host: '0.0.0.0',
+      // 端口号
+      port: VITE_PORT,
+      // 是否自动在浏览器打开
       open: false,
+      // 是否开启 https
       https: false,
       proxy: {
         "/api": {
@@ -90,6 +93,7 @@ export default ({ mode }) => {
     css: {
       devSourcemap: false,
       preprocessorOptions: {
+        // 全局引入scss
         scss: {
           additionalData: `@use "@/styles/variables.module.scss" as *; @use "@/styles/mixin.scss" as *;`,
         },

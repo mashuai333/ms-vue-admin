@@ -58,15 +58,3 @@
     border-bottom: $transparent-border-style;
   }
 }
-
-@mixin itemFlex {
-  display: flex;
-  align-items: center;
-}
-
-@mixin itemOverflow {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  cursor: pointer;
-}
