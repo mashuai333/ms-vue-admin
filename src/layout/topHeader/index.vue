@@ -23,7 +23,7 @@
         </template>
       </el-dropdown>
       <el-icon title="退出登录" @click="quitUser">
-        <svg-icon name="exit" color="#ffffff" />
+        <svg-icon icon="exit" color="#ffffff" />
       </el-icon>
     </div>
   </el-header>

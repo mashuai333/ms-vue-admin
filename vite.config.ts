@@ -4,7 +4,7 @@ import { resolve } from "path";
 import pkg from "./package.json";
 import { warpperEnv } from "./build";
 import { getPluginsList } from "./build/plugins";
-
+import { include, exclude } from "./build/optimize";
 // import AutoImport from 'unplugin-auto-import/vite'
 // import Components from 'unplugin-vue-components/vite'
 // import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
@@ -95,21 +95,16 @@ export default ({ command, mode }) => {
       preprocessorOptions: {
         // 全局引入scss
         scss: {
-          additionalData: `@use "@/styles/variables.module.scss" as *; @use "@/styles/mixin.scss" as *;`,
+          additionalData: '@use "./src/styles/variables.module.scss" as *;',
+          javascriptEnabled: true
         },
       }
     },
+    // https://cn.vitejs.dev/config/dep-optimization-options.html#dep-optimization-options
     optimizeDeps: {
       //预构建
-      include: [
-        "vue",
-        "vue-router",
-        "element-plus/es/locale/lang/zh-cn",
-        "@vueuse/core",
-        "axios",
-        "qs",
-        "echarts",
-      ],
+      include,
+      exclude
     },
     build: {
       minify: "terser",

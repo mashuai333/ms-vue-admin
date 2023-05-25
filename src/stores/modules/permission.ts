@@ -1,105 +1,77 @@
 import { defineStore } from 'pinia'
-import { constantRoutes } from '@/router'
 import { resetRouter } from '@/router'
-import { RouteRecordRaw } from 'vue-router'
-/**
- * 通过递归过滤异步路由表
- * @param routes  interface menu
- */
-
-const Layout = () => import('@/layout/index.vue')
-const Frame = () => import('@/layout/frameView.vue')
-const modules = import.meta.glob('../../views/**/*.vue') // 导入
-
-function getComponentModule(path: string) {
-  if (path.includes('layout/index')) {
-    return Layout
-  } else if (path.includes('layout/frameView')) {
-    return Frame
-  } else if (path) {
-    return modules[`../../views/${path}.vue`]
-  } else {
-    return null
-  }
-}
-
-function filterAsyncRoutes(routes: MenuListItem[]) {
-  const newRouter = [] as AppCustomRouteRecordRaw[]
-  routes.forEach((route: MenuListItem) => {
-    const tmp = { ...route }
-    const newRoute = {
-      path: tmp.path,
-      name: tmp.name,
-      component: getComponentModule(tmp.component),
-      meta: {
-        title: tmp.title,
-        icon: tmp.icon,
-        activeMenu: tmp.activeMenu,
-        hidden: tmp.hidden,
-        affix: tmp.affix,
-        breadcrumb: tmp.breadcrumb,
-        frameSrc: tmp.frameSrc
-      },
-      children: []
-    }
-    if (tmp.children && tmp.children.length) {
-      newRoute.children = filterAsyncRoutes(tmp.children)
-    }
-    newRouter.push({ ...tmp, ...newRoute })
-  })
-  return newRouter
-}
+import { asyncRouterMap, constantRouterMap } from '@/router'
+import { generateRoutesFn1, generateRoutesFn2, flatMultiLevelRoutes } from '@/utils/routerHelper'
+import { pinia } from '../index'
+import { cloneDeep } from 'lodash-es'
 
 export interface PermissionState {
-  routers: AppCustomRouteRecordRaw[]
-  addRouters: AppCustomRouteRecordRaw[]
-  menuTabRouters: MenuListItem[]
+  routers: AppRouteRecordRaw[]
+  addRouters: AppRouteRecordRaw[]
+  isAddRouters: boolean
+  menuTabRouters: AppRouteRecordRaw[]
 }
 
 export const usePermissionStore = defineStore('permission', {
   state: (): PermissionState => ({
     routers: [], //菜单渲染的路由
     addRouters: [], // 动态添加的路由
-    menuTabRouters: [] //登录存储的菜单
+    menuTabRouters: [], //登录存储的菜单
+    isAddRouters: false
   }),
   getters: {
-    getRouters(state): AppCustomRouteRecordRaw[] {
+    getRouters(state): AppRouteRecordRaw[] {
       return state.routers
     },
-    getAddRouters(state): AppCustomRouteRecordRaw[] {
-      return state.addRouters
+    getAddRouters(state): AppRouteRecordRaw[] {
+      return flatMultiLevelRoutes(cloneDeep(state.addRouters))
     },
-    getMenuTabRouters(state): MenuListItem[] {
+    getIsAddRouters(state): boolean {
+      return state.isAddRouters
+    },
+    getMenuTabRouters(state): AppRouteRecordRaw[] {
       return state.menuTabRouters
     }
   },
   actions: {
-    setRoutes(routes: RouteRecordRaw[]) {
-      this.addRouters = routes
-      this.routers = constantRoutes.concat(routes)
-    },
-    setResponseMenu(routes: RouteRecordRaw[]) {
-      this.menuTabRouters = routes
-    },
-    generateRoutes() {
-      return new Promise((resolve, reject) => {
-        if (this.menuTabRouters && this.menuTabRouters.length) {
-          let accessedRoutes = []
-          accessedRoutes = filterAsyncRoutes(this.menuTabRouters)
-          accessedRoutes.push({
-            path: '/:pathMatch(.*)*',
-            name: 'redirectTo404',
-            redirect: '/404',
-            meta: {
-              hidden: true
-            }
-          })
-          this.setRoutes(accessedRoutes)
-          resolve(accessedRoutes)
+    generateRoutes(
+      type: 'admin' | 'test' | 'none',
+      routers?: AppCustomRouteRecordRaw[] | string[]
+    ): Promise<unknown> {
+      return new Promise<void>(resolve => {
+        let routerMap: AppRouteRecordRaw[] = []
+        if (type === 'admin') {
+          // 模拟后端过滤菜单
+          routerMap = generateRoutesFn2(routers as AppCustomRouteRecordRaw[])
+        } else if (type === 'test') {
+          // 模拟前端过滤菜单
+          routerMap = generateRoutesFn1(cloneDeep(asyncRouterMap), routers as string[])
         } else {
-          reject()
+          // 直接读取静态路由表
+          routerMap = cloneDeep(asyncRouterMap)
         }
+        // 动态路由，404一定要放到最后面
+        this.addRouters = routerMap.concat([
+          {
+            path: '/:path(.*)*',
+            redirect: '/404',
+            name: '404Page',
+            meta: {
+              hidden: true,
+              breadcrumb: false
+            }
+          }
+        ])
+        // 渲染菜单的所有路由
+        this.routers = cloneDeep(constantRouterMap).concat(routerMap)
+        resolve()
       })
+    },
+    setIsAddRouters(state: boolean): void {
+      this.isAddRouters = state
+    },
+    setMenuTabRouters(routers: AppRouteRecordRaw[]): void {
+      this.menuTabRouters = routers
     },
     resetRoutes() {
       // 路由数据重置
@@ -112,3 +84,7 @@ export const usePermissionStore = defineStore('permission', {
     paths: ['menuTabRouters']
   }
 })
+
+export const usePermissionStoreWithOut = () => {
+  return usePermissionStore(pinia)
+}

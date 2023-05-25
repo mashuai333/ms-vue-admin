@@ -13,6 +13,11 @@ $activeTextColor: #ffffff; //激活的菜单颜色
 // $subMenuBg: #ffffff;
 // $subMenuHover: #4d9b98;
 
+// 命名空间
+$namespace: v;
+// el命名空间
+$elNamespace: el;
+
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
@@ -27,4 +32,6 @@ $activeTextColor: #ffffff; //激活的菜单颜色
   // subMenuActiveText: $subMenuActiveText;
   // subMenuBg: $subMenuBg;
   // subMenuHover: $subMenuHover;
+  namespace: $namespace;
+  elNamespace: $elNamespace;
 }

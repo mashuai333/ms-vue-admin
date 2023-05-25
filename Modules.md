@@ -65,3 +65,9 @@ npm i vite-plugin-compression -D
 <https://tailwindcss.com/docs/installation> npm install -D tailwindcss npx tailwindcss init 配置 tailwind.config.js 增加 styles/tailwind.css
 
 npm install -D postcss-import 配置 postcss.config.js npm install -D autoprefixer 安装 cssnano 缩减器 npm install cssnano postcss --save-dev
+
+## 安装图标
+
+<!-- elementPlus默认 -->
+
+pnpm install @element-plus/icons-vue

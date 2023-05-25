@@ -264,7 +264,7 @@ const setSymbol = data => {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .amap-logo {
   display: none !important;
 }

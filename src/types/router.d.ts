@@ -47,14 +47,13 @@ type Component<T = any> =
   | (() => Promise<T>)
 
 declare global {
-  /**
-   * `src/router` 文件夹里的类型声明
-   */
-  interface toRouteType extends RouteLocationNormalized {
-    meta: {
-      roles: Array<string>
-      keepAlive?: boolean
-    }
+  declare interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
+    name: string
+    meta: RouteMeta
+    component?: Component | string
+    children?: AppRouteRecordRaw[]
+    props?: Recordable
+    fullPath?: string
   }
 
   declare interface AppCustomRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
@@ -65,22 +64,31 @@ declare global {
     redirect?: string
     children?: AppCustomRouteRecordRaw[]
   }
+  /**
+   * `src/router` 文件夹里的类型声明
+   */
+  // interface toRouteType extends RouteLocationNormalized {
+  //   meta: {
+  //     roles: Array<string>
+  //     keepAlive?: boolean
+  //   }
+  // }
 
-  declare interface MenuListItem {
-    title: string // 页面名称
-    path: string // 页面路由
-    name: string // 组件名称
-    affix: boolean //固定菜单
-    hidden: boolean //隐藏菜单
-    component: string //组件地址
-    sortIndex: number // 排序
-    children: MenuListItem[] //子菜单
-    redirect?: string // 重定向路由
-    icon?: string //组件图标
-    activeMenu?: string //激活父菜单路由
-    breadcrumb?: boolean
-    frameSrc?: string
-    parentId?: number
-    id?: number
-  }
+  // declare interface MenuListItem {
+  //   title: string // 页面名称
+  //   path: string // 页面路由
+  //   name: string // 组件名称
+  //   affix: boolean //固定菜单
+  //   hidden: boolean //隐藏菜单
+  //   component: string //组件地址
+  //   sortIndex: number // 排序
+  //   children: MenuListItem[] //子菜单
+  //   redirect?: string // 重定向路由
+  //   icon?: string //组件图标
+  //   activeMenu?: string //激活父菜单路由
+  //   breadcrumb?: boolean
+  //   frameSrc?: string
+  //   parentId?: number
+  //   id?: number
+  // }
 }

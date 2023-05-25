@@ -1,7 +1,7 @@
 <template>
   <div class="box-container">
     <el-icon class="icon">
-      <svg-icon name="403" />
+      <svg-icon icon="403" />
     </el-icon>
     <div class="text-box">
       <p class="text-title"> 403 </p>

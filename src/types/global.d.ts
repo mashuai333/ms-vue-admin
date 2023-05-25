@@ -34,26 +34,26 @@ declare global {
     responseType?: AxiosResponseType
   }
 
-  // declare interface IResponse<T = any> {
-  //   code: number;
-  //   message: string;
-  //   data: T extends any ? T : T & any;
-  // }
-
   declare interface IResponse<T = any> {
-    orgList?: T extends any ? T : T & any //可能返回的包装key
-    pageModel?: T extends any ? T : T & any //可能返回的包装key
-    list?: T extends any ? T : T & any //可能返回的包装key
-    report?: T extends any ? T : T & any //可能返回的包装key
-    playbackResult?: T extends any ? T : T & any //可能返回的包装key
-    warnList?: T extends any ? T : T & any //可能返回的包装key
-    violateList?: T extends any ? T : T & any //可能返回的包装key
-    userInfo?: T extends any ? T : T & any //可能返回的包装key
-    lineEquipmentNumber?: T extends any ? T : T & any //可能返回的包装key
-    token?: string
-    name?: string
-    [propName: string]: any
+    code: number
+    message: string
+    data: T extends any ? T : T & any
   }
+
+  // declare interface IResponse<T = any> {
+  //   orgList?: T extends any ? T : T & any //可能返回的包装key
+  //   pageModel?: T extends any ? T : T & any //可能返回的包装key
+  //   list?: T extends any ? T : T & any //可能返回的包装key
+  //   report?: T extends any ? T : T & any //可能返回的包装key
+  //   playbackResult?: T extends any ? T : T & any //可能返回的包装key
+  //   warnList?: T extends any ? T : T & any //可能返回的包装key
+  //   violateList?: T extends any ? T : T & any //可能返回的包装key
+  //   userInfo?: T extends any ? T : T & any //可能返回的包装key
+  //   lineEquipmentNumber?: T extends any ? T : T & any //可能返回的包装key
+  //   token?: string
+  //   name?: string
+  //   [propName: string]: any
+  // }
 
   /**
    * 打包压缩格式的类型声明

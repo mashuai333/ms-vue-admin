@@ -14,18 +14,27 @@ import './styles/tailwind.css'
 // 引入element-plus样式
 import './styles/element/index.scss'
 
+const app = createApp(App)
+
 import router from './router'
 import store from './stores'
 import svgIcon from '@/components/SvgIcon/index.vue'
+
 // import './permission'
-const app = createApp(App)
 app.config.errorHandler = (err, vm, info) => {
   // handle error
   console.log('[全局异常]', err, vm, info)
 }
+// 全局注册`@iconify/vue`图标库
+
+import { IconifyIconOffline, IconifyIconOnline, FontIcon } from './components/ReIcon'
+app.component('IconifyIconOffline', IconifyIconOffline)
+app.component('IconifyIconOnline', IconifyIconOnline)
+app.component('FontIcon', FontIcon)
 
 app.use(ElementPlus, { zIndex: 3000 })
 // app.use(useElementPlus)
+// 自定义引入svg组件
 app.component('svg-icon', svgIcon)
 app.use(MotionPlugin)
 app.use(router)

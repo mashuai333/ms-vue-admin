@@ -9,5 +9,3 @@ import { ref } from 'vue'
 import CustomGDMap from './map.vue'
 const typeAndData = ref(null)
 </script>
-
-<style scoped></style>

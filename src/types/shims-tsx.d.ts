@@ -5,7 +5,12 @@ declare module '*.tsx' {
   export default Vue
 }
 
+import Vue, { VNode } from 'vue'
 declare global {
+  declare module '*.tsx' {
+    import Vue from 'compatible-vue'
+    export default Vue
+  }
   namespace JSX {
     interface Element extends VNode {}
     interface ElementClass extends Vue {}
