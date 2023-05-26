@@ -95,16 +95,16 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       alwaysShow: true
     },
     children: [
-      {
-        path: 'analysis',
-        component: () => import('@/views/Dashboard/Analysis.vue'),
-        name: 'Analysis',
-        meta: {
-          title: '分析页',
-          noCache: true,
-          affix: true
-        }
-      },
+      // {
+      //   path: 'analysis',
+      //   component: () => import('@/views/Dashboard/Analysis.vue'),
+      //   name: 'Analysis',
+      //   meta: {
+      //     title: '分析页',
+      //     noCache: true,
+      //     affix: true
+      //   }
+      // },
       {
         path: 'map',
         component: () => import('@/views/geoGdMap/index.vue'),

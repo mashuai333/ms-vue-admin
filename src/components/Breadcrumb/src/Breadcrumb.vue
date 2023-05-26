@@ -9,12 +9,7 @@ import type { RouteLocationNormalizedLoaded, RouteMeta } from 'vue-router'
 // import { useI18n } from '@/hooks/web/useI18n'
 // import { Icon } from '@/components/Icon'
 import { useAppStore } from '@/stores/modules/app'
-import { useDesign } from '@/hooks/web/useDesign'
-
-const { getPrefixCls } = useDesign()
-
-const prefixCls = getPrefixCls('breadcrumb')
-
+import { useRenderIcon } from '@/components/ReIcon/src/hooks'
 const appStore = useAppStore()
 
 // 面包屑图标
@@ -52,7 +47,7 @@ export default defineComponent({
           <ElBreadcrumbItem to={{ path: disabled ? '' : v.path }} key={v.name}>
             {meta?.icon && breadcrumbIcon.value ? (
               <>
-                <Icon icon={meta.icon} class="mr-[5px]"></Icon> {v?.meta?.title}
+                <useRenderIcon icon={meta.icon} class="mr-[5px]"></useRenderIcon> {v?.meta?.title}
               </>
             ) : (
               v?.meta?.title
@@ -76,7 +71,7 @@ export default defineComponent({
     )
 
     return () => (
-      <ElBreadcrumb separator="/" class={`${prefixCls} flex items-center h-full ml-[10px]`}>
+      <ElBreadcrumb separator="/" class="v-breadcrumb flex items-center h-full ml-[10px]">
         <TransitionGroup appear enter-active-class="animate__animated animate__fadeInRight">
           {renderBreadcrumb()}
         </TransitionGroup>
@@ -87,12 +82,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-$prefix-cls: '${elNamespace}-breadcrumb';
-
-.#{$prefix-cls} {
+.el-breadcrumb {
   :deep(&__item) {
     display: flex;
-    .#{$prefix-cls}__inner {
+
+    .el-breadcrumb__inner {
       display: flex;
       align-items: center;
       color: var(--top-header-text-color);
@@ -104,7 +98,7 @@ $prefix-cls: '${elNamespace}-breadcrumb';
   }
 
   :deep(&__item):not(:last-child) {
-    .#{$prefix-cls}__inner {
+    .el-breadcrumb__inner {
       color: var(--top-header-text-color);
 
       &:hover {
@@ -114,7 +108,7 @@ $prefix-cls: '${elNamespace}-breadcrumb';
   }
 
   :deep(&__item):last-child {
-    .#{$prefix-cls}__inner {
+    .el-breadcrumb__inner {
       color: var(--el-text-color-placeholder);
 
       &:hover {

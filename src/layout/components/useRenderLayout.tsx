@@ -7,11 +7,6 @@ import { Logo } from '@/components/Logo'
 import AppView from './AppView.vue'
 import ToolHeader from './ToolHeader.vue'
 import { ElScrollbar } from 'element-plus'
-import { useDesign } from '@/hooks/web/useDesign'
-
-const { getPrefixCls } = useDesign()
-
-const prefixCls = getPrefixCls('layout')
 
 const appStore = useAppStore()
 
@@ -56,7 +51,7 @@ export const useRenderLayout = () => {
         </div>
         <div
           class={[
-            `${prefixCls}-content`,
+            `v-layout-content`,
             'absolute top-0 h-[100%]',
             {
               'w-[calc(100%-var(--left-menu-min-width))] left-[var(--left-menu-min-width)]':
@@ -70,7 +65,7 @@ export const useRenderLayout = () => {
           <ElScrollbar
             v-loading={pageLoading.value}
             class={[
-              `${prefixCls}-content-scrollbar`,
+              `v-layout-content-scrollbar`,
               {
                 '!h-[calc(100%-var(--top-tool-height)-var(--tags-view-height))] mt-[calc(var(--top-tool-height)+var(--tags-view-height))]':
                   fixedHeader.value
@@ -114,7 +109,7 @@ export const useRenderLayout = () => {
           <Menu class="!h-full"></Menu>
           <div
             class={[
-              `${prefixCls}-content`,
+              `v-layout-content`,
               'h-[100%]',
               {
                 'w-[calc(100%-var(--left-menu-min-width))] left-[var(--left-menu-min-width)]':
@@ -127,7 +122,7 @@ export const useRenderLayout = () => {
             <ElScrollbar
               v-loading={pageLoading.value}
               class={[
-                `${prefixCls}-content-scrollbar`,
+                `v-layout-content-scrollbar`,
                 {
                   '!h-[calc(100%-var(--tags-view-height))] mt-[calc(var(--tags-view-height))]':
                     fixedHeader.value && tagsView.value
@@ -164,11 +159,11 @@ export const useRenderLayout = () => {
           <Menu class="flex-1 px-10px h-[var(--top-tool-height)]"></Menu>
           <ToolHeader></ToolHeader>
         </div>
-        <div class={[`${prefixCls}-content`, 'h-full w-full']}>
+        <div class={[`v-layout-content`, 'h-full w-full']}>
           <ElScrollbar
             v-loading={pageLoading.value}
             class={[
-              `${prefixCls}-content-scrollbar`,
+              `v-layout-content-scrollbar`,
               {
                 'mt-[var(--tags-view-height)] !pb-[calc(var(--tags-view-height)+var(--app-footer-height))]':
                   fixedHeader.value,
@@ -205,7 +200,7 @@ export const useRenderLayout = () => {
           {/* <TabMenu></TabMenu> */}
           <div
             class={[
-              `${prefixCls}-content`,
+              `v-layout-content`,
               'h-[100%]',
               {
                 'w-[calc(100%-var(--tab-menu-min-width))] left-[var(--tab-menu-min-width)]':
@@ -222,7 +217,7 @@ export const useRenderLayout = () => {
             <ElScrollbar
               v-loading={pageLoading.value}
               class={[
-                `${prefixCls}-content-scrollbar`,
+                `v-layout-content-scrollbar`,
                 {
                   '!h-[calc(100%-var(--tags-view-height))] mt-[calc(var(--tags-view-height))]':
                     fixedHeader.value && tagsView.value

@@ -5,14 +5,9 @@ import { useCache } from '@/hooks/web/useCache'
 import { resetRouter } from '@/router'
 import { useRouter } from 'vue-router'
 import { loginOutApi } from '@/api/login'
-import { useDesign } from '@/hooks/web/useDesign'
 import { useTagsViewStore } from '@/store/modules/tagsView'
 
 const tagsViewStore = useTagsViewStore()
-
-const { getPrefixCls } = useDesign()
-
-const prefixCls = getPrefixCls('user-info')
 
 // const { t } = useI18n()
 
@@ -44,7 +39,7 @@ const toDocument = () => {
 </script>
 
 <template>
-  <ElDropdown :class="prefixCls" trigger="click">
+  <ElDropdown class="v-user-info" trigger="click">
     <div class="flex items-center">
       <img
         src="@/assets/imgs/avatar.jpg"

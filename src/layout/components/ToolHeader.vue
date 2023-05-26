@@ -7,11 +7,6 @@ import { SizeDropdown } from '@/components/SizeDropdown'
 import { Screenfull } from '@/components/Screenfull'
 // import { Breadcrumb } from '@/components/Breadcrumb'
 import { useAppStore } from '@/stores/modules/app'
-import { useDesign } from '@/hooks/web/useDesign'
-
-const { getPrefixCls, variables } = useDesign()
-
-const prefixCls = getPrefixCls('tool-header')
 
 const appStore = useAppStore()
 
@@ -38,9 +33,9 @@ export default defineComponent({
   setup() {
     return () => (
       <div
-        id={`${variables.namespace}-tool-header`}
+        id="v-tool-header"
         class={[
-          prefixCls,
+          'v-tool-header',
           'h-[var(--top-tool-height)] relative px-[var(--top-tool-p-x)] flex items-center justify-between',
           'dark:bg-[var(--el-bg-color)]'
         ]}>
@@ -71,8 +66,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-$prefix-cls: $namespace + '-tool-header';
-.#{$prefix-cls} {
+.v-tool-header {
   transition: left var(--transition-time-02);
 }
 </style>

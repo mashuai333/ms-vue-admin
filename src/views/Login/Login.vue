@@ -5,12 +5,7 @@ import { ThemeSwitch } from '@/components/ThemeSwitch'
 // import { useI18n } from '@/hooks/web/useI18n'
 import { underlineToHump } from '@/utils'
 import { useAppStore } from '@/stores/modules/app'
-import { useDesign } from '@/hooks/web/useDesign'
 // import { ref } from 'vue'
-
-const { getPrefixCls } = useDesign()
-
-const prefixCls = getPrefixCls('login')
 
 const appStore = useAppStore()
 
@@ -28,34 +23,29 @@ const appStore = useAppStore()
 </script>
 
 <template>
-  <div
-    :class="prefixCls"
-    class="h-[100%] relative <xl:bg-v-dark <sm:px-10px <xl:px-10px <md:px-10px">
-    <div class="relative h-full flex mx-auto">
-      <div
-        :class="`${prefixCls}__left flex-1 bg-gray-500 bg-opacity-20 relative p-30px <xl:hidden`">
+  <div class="v-login select-none relative xl:bg-v-dark sm:px-10px xl:px-10px md:px-10px">
+    <div class="relative flex mx-auto">
+      <div class="v-login__left h-screen flex-1 bg-gray-500 bg-opacity-20 relative p-5 xl:hidden">
         <div class="flex items-center relative text-white">
-          <img src="@/assets/imgs/logo.png" alt="" class="w-48px h-48px mr-10px" />
-          <span class="text-20px font-bold">{{ underlineToHump(appStore.getTitle) }}</span>
+          <img src="@/assets/logo.png" alt="" class="w-12 h-12 mr-3" />
+          <span class="text-xl font-bold">{{ underlineToHump(appStore.getTitle) }}</span>
         </div>
-        <div class="flex justify-center items-center h-[calc(100%-60px)]">
+        <div class="flex-c h-[calc(100%-88px)]">
           <TransitionGroup
             appear
             tag="div"
             enter-active-class="animate__animated animate__bounceInLeft">
-            <img src="@/assets/svgs/login-box-bg.svg" key="1" alt="" class="w-350px" />
-            <div class="text-3xl text-white" key="2">{{ '欢迎使用本系统' }}</div>
-            <div class="mt-5 font-normal text-white text-14px" key="3">
-              {{ '中后台管理系统' }}
-            </div>
+            <img src="../../assets/svgs/login-box-bg.svg" key="1" alt="" class="w-80" />
+            <div class="text-3xl text-white" key="2">欢迎使用本系统</div>
+            <div class="mt-5 font-normal text-white text-14px" key="3"> 中后台管理系统 </div>
           </TransitionGroup>
         </div>
       </div>
-      <div class="flex-1 p-30px <sm:p-10px dark:bg-v-dark relative">
+      <div class="flex-1 p-7 <sm:p-10px dark:bg-v-dark relative">
         <div class="flex justify-between items-center text-white @2xl:justify-end @xl:justify-end">
           <div class="flex items-center @2xl:hidden @xl:hidden">
-            <img src="@/assets/imgs/logo.png" alt="" class="w-48px h-48px mr-10px" />
-            <span class="text-20px font-bold">{{ underlineToHump(appStore.getTitle) }}</span>
+            <img src="@/assets/logo.png" alt="" class="w-12 h-12 mr-3" />
+            <span class="text-xl font-bold">{{ underlineToHump(appStore.getTitle) }}</span>
           </div>
 
           <div class="flex justify-end items-center space-x-10px">
@@ -65,7 +55,7 @@ const appStore = useAppStore()
         </div>
         <Transition appear enter-active-class="animate__animated animate__bounceInRight">
           <div
-            class="h-full flex items-center m-auto w-[100%] @2xl:max-w-500px @xl:max-w-500px @md:max-w-500px @lg:max-w-500px">
+            class="h-[calc(100%-88px)] flex items-center m-auto w-[100%] @2xl:max-w-500px @xl:max-w-500px @md:max-w-500px @lg:max-w-500px">
             <!-- <LoginForm
               v-if="isLogin"
               class="p-20px h-auto m-auto <xl:(rounded-3xl light:bg-white)"
@@ -82,9 +72,7 @@ const appStore = useAppStore()
 </template>
 
 <style lang="scss" scoped>
-$prefix-cls: $namespace + '-login';
-
-.#{$prefix-cls} {
+.v-login {
   &__left {
     &::before {
       position: absolute;

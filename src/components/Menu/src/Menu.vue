@@ -6,12 +6,8 @@ import { usePermissionStore } from '@/stores/modules/permission'
 import { useRenderMenuItem } from './components/useRenderMenuItem'
 import { useRouter } from 'vue-router'
 import { isUrl } from '@/utils/is'
-import { useDesign } from '@/hooks/web/useDesign'
+
 import { LayoutType } from '@/types/layout'
-
-const { getPrefixCls } = useDesign()
-
-const prefixCls = getPrefixCls('menu')
 
 export default defineComponent({
   name: 'Menu',
@@ -103,9 +99,9 @@ export default defineComponent({
 
     return () => (
       <div
-        id={prefixCls}
+        id="v-menu"
         class={[
-          `${prefixCls} ${prefixCls}__${unref(menuMode)}`,
+          `v-menu v-menu__${unref(menuMode)}`,
           'h-[100%] overflow-hidden flex-col bg-[var(--left-menu-bg-color)]',
           {
             'w-[var(--left-menu-min-width)]': unref(collapse) && unref(layout) !== 'cutMenu',
@@ -120,8 +116,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-$prefix-cls: $namespace + '-menu';
-
 @mixin is-active--after {
   position: absolute;
   top: 0;
@@ -132,7 +126,7 @@ $prefix-cls: $namespace + '-menu';
   content: '';
 }
 
-.#{$prefix-cls} {
+.v-menu {
   position: relative;
   transition: width var(--transition-time-02);
 
@@ -145,20 +139,20 @@ $prefix-cls: $namespace + '-menu';
     content: '';
   }
 
-  :deep(.#{$elNamespace}-menu) {
+  :deep(.el-menu) {
     width: 100% !important;
     border-right: none;
 
     // 设置选中时子标题的颜色
     .is-active {
-      & > .#{$elNamespace}-sub-menu__title {
+      & > .el-sub-menu__title {
         color: var(--left-menu-text-active-color) !important;
       }
     }
 
     // 设置子菜单悬停的高亮和背景色
-    .#{$elNamespace}-sub-menu__title,
-    .#{$elNamespace}-menu-item {
+    .el-sub-menu__title,
+    .el-menu-item {
       &:hover {
         color: var(--left-menu-text-active-color) !important;
         background-color: var(--left-menu-bg-color) !important;
@@ -166,8 +160,8 @@ $prefix-cls: $namespace + '-menu';
     }
 
     // 设置选中时的高亮背景和高亮颜色
-    .#{$elNamespace}-sub-menu.is-active,
-    .#{$elNamespace}-menu-item.is-active {
+    .el-sub-menu.is-active,
+    .el-menu-item.is-active {
       color: var(--left-menu-text-active-color) !important;
       background-color: var(--left-menu-bg-active-color) !important;
 
@@ -176,7 +170,7 @@ $prefix-cls: $namespace + '-menu';
       }
     }
 
-    .#{$elNamespace}-menu-item.is-active {
+    .el-menu-item.is-active {
       position: relative;
 
       &::after {
@@ -185,20 +179,20 @@ $prefix-cls: $namespace + '-menu';
     }
 
     // 设置子菜单的背景颜色
-    .#{$elNamespace}-menu {
-      .#{$elNamespace}-sub-menu__title,
-      .#{$elNamespace}-menu-item:not(.is-active) {
+    .el-menu {
+      .el-sub-menu__title,
+      .el-menu-item:not(.is-active) {
         background-color: var(--left-menu-bg-light-color) !important;
       }
     }
   }
 
   // 折叠时的最小宽度
-  :deep(.#{$elNamespace}-menu--collapse) {
+  :deep(.el-menu--collapse) {
     width: var(--left-menu-min-width);
 
     & > .is-active,
-    & > .is-active > .#{$elNamespace}-sub-menu__title {
+    & > .is-active > .el-sub-menu__title {
       position: relative;
       background-color: var(--left-menu-collapse-bg-active-color) !important;
 
@@ -211,7 +205,7 @@ $prefix-cls: $namespace + '-menu';
   // 折叠动画的时候，就需要把文字给隐藏掉
   :deep(.horizontal-collapse-transition) {
     // transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out !important;
-    .#{$prefix-cls}__title {
+    .v-menu__title {
       display: none;
     }
   }
@@ -220,17 +214,17 @@ $prefix-cls: $namespace + '-menu';
   &__horizontal {
     height: calc(var(--top-tool-height)) !important;
 
-    :deep(.#{$elNamespace}-menu--horizontal) {
+    :deep(.el-menu--horizontal) {
       height: calc(var(--top-tool-height));
       border-bottom: none;
       // 重新设置底部高亮颜色
-      & > .#{$elNamespace}-sub-menu.is-active {
-        .#{$elNamespace}-sub-menu__title {
+      & > .el-sub-menu.is-active {
+        .el-sub-menu__title {
           border-bottom-color: var(--el-color-primary) !important;
         }
       }
 
-      .#{$elNamespace}-menu-item.is-active {
+      .el-menu-item.is-active {
         position: relative;
 
         &::after {
@@ -238,7 +232,7 @@ $prefix-cls: $namespace + '-menu';
         }
       }
 
-      .#{$prefix-cls}__title {
+      .v-menu__title {
         /* stylelint-disable-next-line */
         max-height: calc(var(--top-tool-height) - 2px) !important;
         /* stylelint-disable-next-line */
@@ -250,8 +244,6 @@ $prefix-cls: $namespace + '-menu';
 </style>
 
 <style lang="scss">
-$prefix-cls: $namespace + '-menu-popper';
-
 @mixin is-active--after {
   position: absolute;
   top: 0;
@@ -262,8 +254,8 @@ $prefix-cls: $namespace + '-menu-popper';
   content: '';
 }
 
-.#{$prefix-cls}--vertical,
-.#{$prefix-cls}--horizontal {
+.v-menu-popper--vertical,
+.v-menu-popper--horizontal {
   // 设置选中时子标题的颜色
   .is-active {
     & > .el-sub-menu__title {

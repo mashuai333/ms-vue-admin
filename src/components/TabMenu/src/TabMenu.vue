@@ -10,12 +10,7 @@ import { useRouter } from 'vue-router'
 import { pathResolve } from '@/utils/routerHelper'
 import { cloneDeep } from 'lodash-es'
 import { filterMenusPath, initTabMap, tabPathMap } from './helper'
-import { useDesign } from '@/hooks/web/useDesign'
 import { isUrl } from '@/utils/is'
-
-const { getPrefixCls, variables } = useDesign()
-
-const prefixCls = getPrefixCls('tab-menu')
 
 export default defineComponent({
   name: 'TabMenu',
@@ -138,9 +133,9 @@ export default defineComponent({
 
     return () => (
       <div
-        id={`${variables.namespace}-menu`}
+        id="v-menu"
         class={[
-          prefixCls,
+          'v-tab-menu',
           'relative bg-[var(--left-menu-bg-color)] top-1px z-3000',
           {
             'w-[var(--tab-menu-max-width)]': !unref(collapse),
@@ -163,7 +158,7 @@ export default defineComponent({
                 return (
                   <div
                     class={[
-                      `${prefixCls}__item`,
+                      `v-tab-menu__item`,
                       'text-center text-12px relative py-12px cursor-pointer',
                       {
                         'is-active': isActive(v.path)
@@ -184,7 +179,7 @@ export default defineComponent({
         </ElScrollbar>
         <div
           class={[
-            `${prefixCls}--collapse`,
+            `v-tab-menu--collapse`,
             'text-center h-[var(--tab-menu-collapse-height)] leading-[var(--tab-menu-collapse-height)] cursor-pointer'
           ]}
           onClick={setCollapse}>

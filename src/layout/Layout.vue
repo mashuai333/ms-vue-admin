@@ -5,11 +5,6 @@ import { useAppStore } from '@/stores/modules/app'
 import { Backtop } from '@/components/Backtop'
 // import { Setting } from '@/components/Setting'
 import { useRenderLayout } from './components/useRenderLayout'
-import { useDesign } from '@/hooks/web/useDesign'
-
-const { getPrefixCls } = useDesign()
-
-const prefixCls = getPrefixCls('layout')
 
 const appStore = useAppStore()
 
@@ -48,7 +43,7 @@ export default defineComponent({
   name: 'Layout',
   setup() {
     return () => (
-      <section class={[prefixCls, `${prefixCls}__${layout.value}`, 'w-[100%] h-[100%] relative']}>
+      <section class={['v-layout', `v-layout__${layout.value}`, 'w-[100%] h-[100%] relative']}>
         {mobile.value && !collapse.value ? (
           <div
             class="absolute top-0 left-0 w-full h-full opacity-30 z-99 bg-[var(--el-color-black)]"
@@ -63,11 +58,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-$prefix-cls: $namespace + '-layout';
-
-.#{$prefix-cls} {
+.v-layout {
   background-color: var(--app-content-bg-color);
-  :deep(.#{$elNamespace}-scrollbar__view) {
+
+  :deep(.el-scrollbar__view) {
     height: 100% !important;
   }
 }

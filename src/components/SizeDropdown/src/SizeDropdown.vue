@@ -4,12 +4,7 @@ import { ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus'
 import { useAppStore } from '@/stores/modules/app'
 // import { useI18n } from '@/hooks/web/useI18n'
 import { propTypes } from '@/utils/propTypes'
-import { useDesign } from '@/hooks/web/useDesign'
 import { ElementPlusSize } from '@/types/elementPlus'
-
-const { getPrefixCls } = useDesign()
-
-const prefixCls = getPrefixCls('size-dropdown')
 
 defineProps({
   color: propTypes.string.def('')
@@ -27,7 +22,7 @@ const setCurrentSize = (size: ElementPlusSize) => {
 </script>
 
 <template>
-  <ElDropdown :class="prefixCls" trigger="click" @command="setCurrentSize">
+  <ElDropdown class="v-size-dropdown" trigger="click" @command="setCurrentSize">
     <Icon :size="18" icon="mdi:format-size" :color="color" class="cursor-pointer" />
     <template #dropdown>
       <ElDropdownMenu>

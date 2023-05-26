@@ -3,11 +3,6 @@ import { ref } from 'vue'
 import { useAppStore } from '@/stores/modules/app'
 import { ElSwitch } from 'element-plus'
 import { useRenderIcon } from '@/components/ReIcon/src/hooks'
-import { useDesign } from '@/hooks/web/useDesign'
-
-const { getPrefixCls } = useDesign()
-
-const prefixCls = getPrefixCls('theme-switch')
 
 const Sun = useRenderIcon('emojione-monotone:sun', { color: '#fde047' })
 
@@ -28,7 +23,7 @@ const themeChange = (val: boolean) => {
 
 <template>
   <ElSwitch
-    :class="prefixCls"
+    class="v-theme-switch"
     v-model="isDark"
     inline-prompt
     :border-color="blackColor"

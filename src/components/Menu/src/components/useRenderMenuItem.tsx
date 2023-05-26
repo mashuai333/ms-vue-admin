@@ -3,7 +3,6 @@ import type { RouteMeta } from 'vue-router'
 import { hasOneShowingChild } from '../helper'
 import { isUrl } from '@/utils/is'
 import { useRenderMenuTitle } from './useRenderMenuTitle'
-import { useDesign } from '@/hooks/web/useDesign'
 import { pathResolve } from '@/utils/routerHelper'
 
 export const useRenderMenuItem = (
@@ -32,14 +31,11 @@ export const useRenderMenuItem = (
             </ElMenuItem>
           )
         } else {
-          const { getPrefixCls } = useDesign()
-
-          const preFixCls = getPrefixCls('menu-popper')
           return (
             <ElSubMenu
               index={fullPath}
               popperClass={
-                menuMode === 'vertical' ? `${preFixCls}--vertical` : `${preFixCls}--horizontal`
+                menuMode === 'vertical' ? `v-menu-popper--vertical` : `v-menu-popper--horizontal`
               }>
               {{
                 title: () => renderMenuTitle(meta),

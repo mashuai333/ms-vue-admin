@@ -24,4 +24,4 @@ $--colors: (
 // @debug $--colors;
 
 // custom dark variables
-// @use "./dark.scss";
+@use '../dark.scss';
