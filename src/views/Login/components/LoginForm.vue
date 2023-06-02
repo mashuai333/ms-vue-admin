@@ -1,111 +1,49 @@
 <script setup lang="ts">
-import { reactive, ref, unref, watch } from 'vue'
-import { Form } from '@/components/Form'
-// import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElCheckbox, ElLink } from 'element-plus'
-import { useForm } from '@/hooks/web/useForm'
-import { loginApi, getTestRoleApi, getAdminRoleApi } from '@/api/login'
-import { useCache } from '@/hooks/web/useCache'
-import { useAppStore } from '@/stores/modules/app'
-import { usePermissionStore } from '@/stores/modules/permission'
+import { reactive, ref, watch, computed } from 'vue'
+import { useI18n } from '@/hooks/web/useI18n'
+import type { FormInstance } from 'element-plus'
+import { useAppStoreHook } from '@/store/modules/app'
+import { useUserStoreHook } from '@/store/modules/user'
+import { usePermissionStoreHook } from '@/store/modules/permission'
 import { useRouter } from 'vue-router'
 import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router'
-import { UserType } from '@/api/login/types'
-import { useValidator } from '@/utils/validate'
-import { FormSchema } from '@/types/form'
+import { loginRules } from '../utils/rule'
+import { operates, thirdParty } from '../utils/enums'
+import { useCache } from '@/hooks/web/useCache'
+import { useRenderIcon } from '@/components/ReIcon/src/hooks'
+import { ReImageVerify } from '@/components/ReImageVerify'
 
-const { required } = useValidator()
+import { getTestRoleApi, getAdminRoleApi } from '@/api/login'
 
-const emit = defineEmits(['to-register'])
+import Lock from '@iconify-icons/ri/lock-fill'
+import User from '@iconify-icons/ri/user-3-fill'
+// import { useValidator } from '@/utils/validate'
 
-const appStore = useAppStore()
+// const { required } = useValidator()
 
-const permissionStore = usePermissionStore()
+const ruleForm = reactive({
+  username: 'admin',
+  password: 'admin123',
+  verifyCode: ''
+})
+const { t } = useI18n()
+const { wsCache } = useCache()
+
+const appStore = useAppStoreHook()
+const permissionStore = usePermissionStoreHook()
+const userStore = useUserStoreHook()
+
+const currentPage = computed(() => {
+  return userStore.currentPage
+})
 
 const { currentRoute, addRoute, push } = useRouter()
 
-const { wsCache } = useCache()
-
-// const { t } = useI18n()
-
-const rules = {
-  username: [required()],
-  password: [required()]
-}
-
-const schema = reactive<FormSchema[]>([
-  {
-    field: 'title',
-    colProps: {
-      span: 24
-    }
-  },
-  {
-    field: 'username',
-    label: '用户名',
-    value: 'admin',
-    component: 'Input',
-    colProps: {
-      span: 24
-    },
-    componentProps: {
-      placeholder: '请输入用户名'
-    }
-  },
-  {
-    field: 'password',
-    label: '密码',
-    value: 'admin',
-    component: 'InputPassword',
-    colProps: {
-      span: 24
-    },
-    componentProps: {
-      style: {
-        width: '100%'
-      },
-      placeholder: '请输入密码'
-    }
-  },
-  {
-    field: 'tool',
-    colProps: {
-      span: 24
-    }
-  },
-  {
-    field: 'login',
-    colProps: {
-      span: 24
-    }
-  },
-  {
-    field: 'other',
-    component: 'Divider',
-    label: '其他登录方式',
-    componentProps: {
-      contentPosition: 'center'
-    }
-  },
-  {
-    field: 'otherIcon',
-    colProps: {
-      span: 24
-    }
-  }
-])
-
-const iconSize = 30
-
-const remember = ref(false)
-
-const { register, elFormRef, methods } = useForm()
-
+const checked = ref(false)
 const loading = ref(false)
-
-const iconColor = '#999'
-
+const ruleFormRef = ref<FormInstance>()
 const redirect = ref<string>('')
+const imgCode = ref('')
 
 watch(
   () => currentRoute.value,
@@ -118,24 +56,19 @@ watch(
 )
 
 // 登录
-const signIn = async () => {
-  const formRef = unref(elFormRef)
-  await formRef?.validate(async isValid => {
-    if (isValid) {
-      loading.value = true
-      const { getFormData } = methods
-      const formData = await getFormData<UserType>()
-
-      try {
-        const res = await loginApi(formData)
-
+const signIn = async (formEl: FormInstance | undefined) => {
+  loading.value = true
+  if (!formEl) return
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      userStore.loginByUsername(ruleForm).then(res => {
         if (res) {
-          wsCache.set(appStore.getUserInfo, res.data)
+          wsCache.set(appStore.getUserInfo, res)
           // 是否使用动态路由
           if (appStore.getDynamicRouter) {
             getRole()
           } else {
-            await permissionStore.generateRoutes('none').catch(() => {})
+            permissionStore.generateRoutes('none').catch(() => {})
             permissionStore.getAddRouters.forEach(route => {
               addRoute(route as RouteRecordRaw) // 动态添加可访问路由表
             })
@@ -143,30 +76,28 @@ const signIn = async () => {
             push({ path: redirect.value || permissionStore.addRouters[0].path })
           }
         }
-      } finally {
-        loading.value = false
-      }
+      })
+    } else {
+      loading.value = false
+      return fields
     }
   })
 }
 
 // 获取角色信息
 const getRole = async () => {
-  const { getFormData } = methods
-  const formData = await getFormData<UserType>()
   const params = {
-    roleName: formData.username
+    roleName: ruleForm.username
   }
   // admin - 模拟后端过滤菜单
   // test - 模拟前端过滤菜单
   const res =
-    formData.username === 'admin' ? await getAdminRoleApi(params) : await getTestRoleApi(params)
+    ruleForm.username === 'admin' ? await getAdminRoleApi(params) : await getTestRoleApi(params)
   if (res) {
-    const { wsCache } = useCache()
     const routers = res.data || []
     wsCache.set('roleRouters', routers)
 
-    formData.username === 'admin'
+    ruleForm.username === 'admin'
       ? await permissionStore.generateRoutes('admin', routers).catch(() => {})
       : await permissionStore.generateRoutes('test', routers).catch(() => {})
 
@@ -178,70 +109,116 @@ const getRole = async () => {
   }
 }
 
-// 去注册页面
-const toRegister = () => {
-  emit('to-register')
-}
+watch(imgCode, value => {
+  useUserStoreHook().SET_VERIFYCODE(value)
+})
+// // 去注册页面
+// const toRegister = () => {
+//   emit('to-register')
+// }
+
+// const emit = defineEmits(['to-register'])
 </script>
 
 <template>
-  <Form
-    :schema="schema"
-    :rules="rules"
-    label-position="top"
-    hide-required-asterisk
-    size="large"
-    class="dark:(border-1 border-[var(--el-border-color)] border-solid)"
-    @register="register">
-    <template #title>
-      <h2 class="text-2xl font-bold text-center w-[100%]">{{ '登录' }}</h2>
-    </template>
+  <div>
+    <div class="flex justify-center items-center mb-3">
+      <h2 class="text-2xl font-bold text-center">{{ t('login.login') }}</h2>
+    </div>
+    <el-form ref="ruleFormRef" :model="ruleForm" :rules="loginRules" size="large">
+      <Motion :delay="100">
+        <el-form-item
+          :rules="[
+            {
+              required: true,
+              message: t('login.usernameReg'),
+              trigger: 'blur'
+            }
+          ]"
+          prop="username">
+          <el-input
+            clearable
+            v-model="ruleForm.username"
+            :placeholder="t('login.username')"
+            :prefix-icon="useRenderIcon(User)" />
+        </el-form-item>
+      </Motion>
 
-    <template #tool>
-      <div class="flex justify-between items-center w-[100%]">
-        <ElCheckbox v-model="remember" :label="'记住我'" size="small" />
-        <ElLink type="primary" :underline="false">{{ '忘记密码' }}</ElLink>
-      </div>
-    </template>
+      <Motion :delay="150">
+        <el-form-item prop="password">
+          <el-input
+            clearable
+            show-password
+            v-model="ruleForm.password"
+            :placeholder="t('login.password')"
+            :prefix-icon="useRenderIcon(Lock)" />
+        </el-form-item>
+      </Motion>
+      <Motion :delay="200">
+        <el-form-item prop="verifyCode">
+          <el-input
+            clearable
+            v-model="ruleForm.verifyCode"
+            :placeholder="t('login.verifyCode')"
+            :prefix-icon="useRenderIcon('ri:shield-keyhole-line')">
+            <template v-slot:append>
+              <ReImageVerify v-model:code="imgCode" />
+            </template>
+          </el-input>
+        </el-form-item>
+      </Motion>
+      <Motion :delay="250">
+        <el-form-item>
+          <div class="w-full h-[20px] flex justify-between items-center">
+            <el-checkbox v-model="checked">
+              {{ t('login.remember') }}
+            </el-checkbox>
+            <el-button link type="primary" @click="userStore.SET_CURRENTPAGE(4)">
+              {{ t('login.forget') }}
+            </el-button>
+          </div>
+          <el-button
+            class="w-full mt-3"
+            size="default"
+            type="primary"
+            :loading="loading"
+            @click="signIn(ruleFormRef)">
+            {{ t('login.login') }}
+          </el-button>
+        </el-form-item>
+      </Motion>
 
-    <template #login>
-      <div class="w-[100%]">
-        <ElButton :loading="loading" type="primary" class="w-[100%]" @click="signIn">
-          {{ '登录' }}
-        </ElButton>
-      </div>
-      <div class="w-[100%] mt-15px">
-        <ElButton class="w-[100%]" @click="toRegister">
-          {{ 'register' }}
-        </ElButton>
-      </div>
-    </template>
-
-    <template #otherIcon>
-      <div class="flex justify-between w-[100%]">
-        <Icon
-          icon="ant-design:github-filled"
-          :size="iconSize"
-          class="cursor-pointer anticon"
-          :color="iconColor" />
-        <Icon
-          icon="ant-design:wechat-filled"
-          :size="iconSize"
-          class="cursor-pointer anticon"
-          :color="iconColor" />
-        <Icon
-          icon="ant-design:alipay-circle-filled"
-          :size="iconSize"
-          :color="iconColor"
-          class="cursor-pointer anticon" />
-        <Icon
-          icon="ant-design:weibo-circle-filled"
-          :size="iconSize"
-          :color="iconColor"
-          class="cursor-pointer anticon" />
-      </div>
-    </template>
-  </Form>
+      <Motion :delay="300">
+        <el-form-item>
+          <div class="w-full flex-bc">
+            <el-button
+              v-for="(item, index) in operates"
+              :key="index"
+              class="w-full"
+              size="default"
+              @click="userStore.SET_CURRENTPAGE(index + 1)">
+              {{ t(item.title) }}
+            </el-button>
+          </div>
+        </el-form-item>
+      </Motion>
+    </el-form>
+    <Motion v-if="currentPage === 0" :delay="350">
+      <el-form-item>
+        <el-divider>
+          <p class="text-gray-500 text-xs">{{ t('login.thirdLogin') }}</p>
+        </el-divider>
+        <div class="w-full flex justify-evenly">
+          <span v-for="(item, index) in thirdParty" :key="index" :title="t(item.title)">
+            <IconifyIconOnline
+              :icon="`ri:${item.icon}-fill`"
+              width="20"
+              class="cursor-pointer text-gray-500 hover:text-blue-400" />
+          </span>
+        </div>
+      </el-form-item>
+    </Motion>
+  </div>
 </template>
 
 <style lang="scss" scoped>

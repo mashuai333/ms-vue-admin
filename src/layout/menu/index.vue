@@ -18,7 +18,7 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { usePermissionStore } from '@/stores/modules/permission'
+import { usePermissionStore } from '@/store/modules/permission'
 
 import menuItem from './menuItem.vue'
 // 获取权限路由

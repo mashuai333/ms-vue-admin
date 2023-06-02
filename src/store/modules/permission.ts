@@ -85,6 +85,6 @@ export const usePermissionStore = defineStore('permission', {
   }
 })
 
-export const usePermissionStoreWithOut = () => {
+export const usePermissionStoreHook = () => {
   return usePermissionStore(pinia)
 }

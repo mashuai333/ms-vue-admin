@@ -6,7 +6,7 @@ import { SizeDropdown } from '@/components/SizeDropdown'
 // import { UserInfo } from '@/components/UserInfo'
 import { Screenfull } from '@/components/Screenfull'
 // import { Breadcrumb } from '@/components/Breadcrumb'
-import { useAppStore } from '@/stores/modules/app'
+import { useAppStore } from '@/store/modules/app'
 
 const appStore = useAppStore()
 

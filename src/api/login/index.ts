@@ -1,16 +1,21 @@
 import request from '@/config/axios'
-import type { UserType } from './types'
+import type { UserLoginType, UserType, UserResult, RefreshTokenResult } from './types'
 
 interface RoleParams {
   roleName: string
 }
 
-export const loginApi = (data: UserType): Promise<IResponse<UserType>> => {
+export const loginApi = (data: UserLoginType): Promise<IResponse<UserResult>> => {
   return request.post({ url: '/user/login', data })
 }
 
 export const loginOutApi = (): Promise<IResponse> => {
   return request.get({ url: '/user/loginOut' })
+}
+
+/** 刷新token */
+export const refreshTokenApi = (data?: object): Promise<IResponse<RefreshTokenResult>> => {
+  return request.post({ url: 'user/refreshToken', data })
 }
 
 export const getUserListApi = ({ params }: AxiosConfig) => {

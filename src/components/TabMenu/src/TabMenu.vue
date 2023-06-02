@@ -1,6 +1,6 @@
 <script lang="tsx">
-import { usePermissionStore } from '@/stores/modules/permission'
-import { useAppStore } from '@/stores/modules/app'
+import { usePermissionStore } from '@/store/modules/permission'
+import { useAppStore } from '@/store/modules/app'
 import { computed, unref, defineComponent, watch, ref, onMounted } from 'vue'
 // import { useI18n } from '@/hooks/web/useI18n'
 import { ElScrollbar } from 'element-plus'

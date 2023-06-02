@@ -1,8 +1,8 @@
 <script lang="tsx">
 import { computed, defineComponent, unref, PropType } from 'vue'
 import { ElMenu, ElScrollbar } from 'element-plus'
-import { useAppStore } from '@/stores/modules/app'
-import { usePermissionStore } from '@/stores/modules/permission'
+import { useAppStore } from '@/store/modules/app'
+import { usePermissionStore } from '@/store/modules/permission'
 import { useRenderMenuItem } from './components/useRenderMenuItem'
 import { useRouter } from 'vue-router'
 import { isUrl } from '@/utils/is'

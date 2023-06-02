@@ -1,21 +1,20 @@
 <script setup lang="ts">
-// import { LoginForm, RegisterForm } from './components'
+import { LoginForm } from './components'
 import { ThemeSwitch } from '@/components/ThemeSwitch'
-// import { LocaleDropdown } from '@/components/LocaleDropdown'
-// import { useI18n } from '@/hooks/web/useI18n'
+import { LocaleDropdown } from '@/components/LocaleDropdown'
+import { useI18n } from '@/hooks/web/useI18n'
 import { underlineToHump } from '@/utils'
-import { useAppStore } from '@/stores/modules/app'
-// import { ref } from 'vue'
+import { useAppStoreHook } from '@/store/modules/app'
+import { ref } from 'vue'
 
-const appStore = useAppStore()
+const appStore = useAppStoreHook()
+const { t } = useI18n()
 
-// const { t } = useI18n()
+const isLogin = ref(true)
 
-// const isLogin = ref(true)
-
-// const toRegister = () => {
-//   isLogin.value = false
-// }
+const toRegister = () => {
+  isLogin.value = false
+}
 
 // const toLogin = () => {
 //   isLogin.value = true
@@ -23,9 +22,9 @@ const appStore = useAppStore()
 </script>
 
 <template>
-  <div class="v-login select-none relative xl:bg-v-dark sm:px-10px xl:px-10px md:px-10px">
+  <div class="v-login select-none relative xl:bg-v-dark">
     <div class="relative flex mx-auto">
-      <div class="v-login__left h-screen flex-1 bg-gray-500 bg-opacity-20 relative p-5 xl:hidden">
+      <div class="v-login__left h-screen flex-1 bg-gray-500 bg-opacity-20 relative p-5">
         <div class="flex items-center relative text-white">
           <img src="@/assets/logo.png" alt="" class="w-12 h-12 mr-3" />
           <span class="text-xl font-bold">{{ underlineToHump(appStore.getTitle) }}</span>
@@ -36,31 +35,32 @@ const appStore = useAppStore()
             tag="div"
             enter-active-class="animate__animated animate__bounceInLeft">
             <img src="../../assets/svgs/login-box-bg.svg" key="1" alt="" class="w-80" />
-            <div class="text-3xl text-white" key="2">欢迎使用本系统</div>
-            <div class="mt-5 font-normal text-white text-14px" key="3"> 中后台管理系统 </div>
+            <div class="text-3xl text-white" key="2">{{ t('login.welcome') }}</div>
+            <div class="mt-5 font-normal text-white text-14px" key="3">
+              {{ t('login.sysName') }}
+            </div>
           </TransitionGroup>
         </div>
       </div>
-      <div class="flex-1 p-7 <sm:p-10px dark:bg-v-dark relative">
-        <div class="flex justify-between items-center text-white @2xl:justify-end @xl:justify-end">
-          <div class="flex items-center @2xl:hidden @xl:hidden">
+      <div class="flex-1 p-7 sm:p-3 dark:bg-v-dark relative">
+        <div class="flex justify-between items-center dark:text-white minLogoBox">
+          <div class="flex items-center minLogo">
             <img src="@/assets/logo.png" alt="" class="w-12 h-12 mr-3" />
             <span class="text-xl font-bold">{{ underlineToHump(appStore.getTitle) }}</span>
           </div>
 
           <div class="flex justify-end items-center space-x-10px">
             <ThemeSwitch />
-            <!-- <LocaleDropdown class="<xl:text-white dark:text-white" /> -->
+            <LocaleDropdown class="text-black dark:text-white" />
           </div>
         </div>
         <Transition appear enter-active-class="animate__animated animate__bounceInRight">
-          <div
-            class="h-[calc(100%-88px)] flex items-center m-auto w-[100%] @2xl:max-w-500px @xl:max-w-500px @md:max-w-500px @lg:max-w-500px">
-            <!-- <LoginForm
+          <div class="h-[calc(100vh-72px)] flex items-center m-auto w-[100%] max-w-500px">
+            <LoginForm
               v-if="isLogin"
-              class="p-20px h-auto m-auto <xl:(rounded-3xl light:bg-white)"
+              class="p-5 h-auto m-auto xl:(rounded-3xl light:bg-white)"
               @to-register="toRegister" />
-            <RegisterForm
+            <!-- <RegisterForm
               v-else
               class="p-20px h-auto m-auto <xl:(rounded-3xl light:bg-white)"
               @to-login="toLogin" /> -->
@@ -74,6 +74,10 @@ const appStore = useAppStore()
 <style lang="scss" scoped>
 .v-login {
   &__left {
+    @media screen and (width <= 1279px) {
+      display: none;
+    }
+
     &::before {
       position: absolute;
       top: 0;
@@ -86,6 +90,16 @@ const appStore = useAppStore()
       background-repeat: no-repeat;
       content: '';
     }
+  }
+}
+
+@media screen and (width >= 1280px) {
+  .minLogoBox {
+    justify-content: flex-end;
+  }
+
+  .minLogo {
+    display: none;
   }
 }
 </style>

@@ -8,7 +8,7 @@ import axios, {
 import qs from 'qs'
 import { config } from './config'
 import { ElMessage } from 'element-plus'
-import { useUserStore } from '@/stores/modules/user'
+import { useUserStore } from '@/store/modules/user'
 import myCookies from '@/utils/customCookies'
 import router from '@/router'
 import { useDebounceFn } from '@vueuse/core'

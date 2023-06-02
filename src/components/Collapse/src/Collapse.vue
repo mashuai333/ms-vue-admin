@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, unref } from 'vue'
-import { useAppStore } from '@/stores/modules/app'
-import { propTypes } from '@/utils/propTypes'
+import { useAppStore } from '@/store/modules/app'
+import propTypes from '@/utils/propTypes'
 
 defineProps({
   color: propTypes.string.def('')

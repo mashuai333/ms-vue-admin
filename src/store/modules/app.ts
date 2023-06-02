@@ -270,6 +270,6 @@ export const useAppStore = defineStore('app', {
   }
 })
 
-export const useAppStoreWithOut = () => {
+export const useAppStoreHook = () => {
   return useAppStore(pinia)
 }

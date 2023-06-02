@@ -2,13 +2,13 @@
 import { ElBreadcrumb, ElBreadcrumbItem } from 'element-plus'
 import { ref, watch, computed, unref, defineComponent, TransitionGroup } from 'vue'
 import { useRouter } from 'vue-router'
-import { usePermissionStore } from '@/stores/modules/permission'
+import { usePermissionStore } from '@/store/modules/permission'
 import { filterBreadcrumb } from './helper'
 import { filter, treeToList } from '@/utils/tree'
 import type { RouteLocationNormalizedLoaded, RouteMeta } from 'vue-router'
 // import { useI18n } from '@/hooks/web/useI18n'
 // import { Icon } from '@/components/Icon'
-import { useAppStore } from '@/stores/modules/app'
+import { useAppStore } from '@/store/modules/app'
 import { useRenderIcon } from '@/components/ReIcon/src/hooks'
 const appStore = useAppStore()
 

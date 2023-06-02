@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useFullscreen } from '@vueuse/core'
-import { propTypes } from '@/utils/propTypes'
+import propTypes from '@/utils/propTypes'
 
 defineProps({
   color: propTypes.string.def('')

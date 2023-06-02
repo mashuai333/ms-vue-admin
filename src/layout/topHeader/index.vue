@@ -37,7 +37,7 @@ import { ArrowDown } from '@element-plus/icons-vue'
 // import { ElMessage } from "element-plus";
 import modifyPasswordVue from './modifyPasswordDiag.vue'
 
-import { useUserStore } from '@/stores/modules/user'
+import { useUserStore } from '@/store/modules/user'
 
 import Menu from '@/layout/menu/index.vue'
 

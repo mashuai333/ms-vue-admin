@@ -1,5 +1,6 @@
 import vue from '@vitejs/plugin-vue'
 import { type PluginOption } from 'vite'
+import { resolve } from 'path'
 import { viteBuildInfo } from './info'
 import svgLoader from 'vite-svg-loader'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -8,6 +9,7 @@ import { viteMockServe } from 'vite-plugin-mock'
 import { configCompressPlugin } from './compress'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { svgBuilder } from '../src/plugins/svgBuilder'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
 export function getPluginsList(
   command: string,
@@ -17,6 +19,11 @@ export function getPluginsList(
   const lifecycle = process.env.npm_lifecycle_event
   return [
     vue(),
+    VueI18nPlugin({
+      runtimeOnly: true,
+      compositionOnly: true,
+      include: [resolve('locales/**')]
+    }),
     // jsx、tsx语法支持
     vueJsx(),
     VITE_CDN ? cdn : null,

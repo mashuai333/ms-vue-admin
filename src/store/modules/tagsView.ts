@@ -135,6 +135,6 @@ export const useTagsViewStore = defineStore('tagsView', {
   }
 })
 
-export const useTagsViewStoreWithOut = () => {
+export const useTagsViewStoreHook = () => {
   return useTagsViewStore(pinia)
 }

@@ -70,4 +70,8 @@ npm install -D postcss-import 配置 postcss.config.js npm install -D autoprefix
 
 <!-- elementPlus默认 -->
 
-pnpm install @element-plus/icons-vue
+pnpm install @element-plus/icons-vue pnpm install @iconify/vue --dev pnpm install @iconify-icons/ep --dev pnpm install @iconify-icons/ri --dev
+
+## 安装国际化
+
+<https://vue-i18n.intlify.dev/guide/introduction.html> pnpm install vue-i18n@9 pnpm install --save-dev @intlify/unplugin-vue-i18n

@@ -119,7 +119,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
   }
 ]
 
-const router: Router = createRouter({
+export const router: Router = createRouter({
   history: createWebHashHistory(),
   strict: true,
   routes: constantRouterMap as RouteRecordRaw[],

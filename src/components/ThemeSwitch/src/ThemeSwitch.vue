@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useAppStore } from '@/stores/modules/app'
+import { useAppStore } from '@/store/modules/app'
 import { ElSwitch } from 'element-plus'
 import { useRenderIcon } from '@/components/ReIcon/src/hooks'
 

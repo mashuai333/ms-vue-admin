@@ -87,6 +87,8 @@ declare global {
     VITE_HIDE_HOME: string
     VITE_COMPRESSION: ViteCompression
   }
+
+  declare type LocaleType = 'zh-CN' | 'en'
   /**
    * 平台里所有组件实例都能访问到的全局属性对象的类型声明
    */

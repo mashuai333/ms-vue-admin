@@ -14,29 +14,40 @@ import './styles/tailwind.css'
 // 引入element-plus样式
 import './styles/element/index.scss'
 
-const app = createApp(App)
+// 初始化多语言
+import { setupI18n } from '@/plugins/vueI18n'
 
 import router from './router'
-import store from './stores'
+import store from './store'
+
+// 导入全局的svg图标
 import svgIcon from '@/components/SvgIcon/index.vue'
 
-// import './permission'
-app.config.errorHandler = (err, vm, info) => {
-  // handle error
-  console.log('[全局异常]', err, vm, info)
-}
-// 全局注册`@iconify/vue`图标库
+const app = createApp(App)
+app.component('svg-icon', svgIcon)
 
+// import './permission'
+// 全局注册`@iconify/vue`图标库
 import { IconifyIconOffline, IconifyIconOnline, FontIcon } from './components/ReIcon'
 app.component('IconifyIconOffline', IconifyIconOffline)
 app.component('IconifyIconOnline', IconifyIconOnline)
 app.component('FontIcon', FontIcon)
 
-app.use(ElementPlus, { zIndex: 3000 })
-// app.use(useElementPlus)
-// 自定义引入svg组件
-app.component('svg-icon', svgIcon)
-app.use(MotionPlugin)
-app.use(router)
-app.use(store)
-app.mount('#app')
+app.config.errorHandler = (err, vm, info) => {
+  // handle error
+  console.log('[全局异常]', err, vm, info)
+}
+
+const setupAll = async () => {
+  await setupI18n(app)
+  app
+    .use(ElementPlus, { zIndex: 3000 })
+    // .use(useElementPlus)
+    .use(router)
+    .use(store)
+    // 自定义引入svg组件
+    .use(MotionPlugin)
+  app.mount('#app')
+}
+
+setupAll()

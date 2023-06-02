@@ -11,7 +11,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useUserStore } from '@/stores/modules/user'
+import { useUserStore } from '@/store/modules/user'
 const returnThirdLogin = () => {
   const userStore = useUserStore()
   window.location.href = userStore.thirdLoginUrl || '/'
