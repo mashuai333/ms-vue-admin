@@ -1,23 +1,19 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
 import { useI18n } from '@/hooks/web/useI18n'
+import { ref, reactive } from 'vue'
 import Motion from '../utils/motion'
 import { ElMessage } from 'element-plus'
+import { updateRules } from '../utils/rule'
 import type { FormInstance } from 'element-plus'
 import { useVerifyCode } from '../utils/verifyCode'
-import { updateRules } from '../utils/rule'
 import { useUserStoreHook } from '@/store/modules/user'
 import { useRenderIcon } from '@/components/ReIcon/src/hooks'
 import Lock from '@iconify-icons/ri/lock-fill'
 import Iphone from '@iconify-icons/ep/iphone'
-import User from '@iconify-icons/ri/user-3-fill'
 
 const { t } = useI18n()
-
-const checked = ref(false)
 const loading = ref(false)
 const ruleForm = reactive({
-  username: '',
   phone: '',
   verifyCode: '',
   password: '',
@@ -40,22 +36,16 @@ const repeatPasswordRule = [
   }
 ]
 
-const loginRegister = async (formEl: FormInstance | undefined) => {
+const onUpdate = async (formEl: FormInstance | undefined) => {
   loading.value = true
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      if (checked.value) {
-        // 模拟请求，需根据实际开发进行修改
-        setTimeout(() => {
-          ElMessage.success(t('login.registerSuccess'))
-          loading.value = false
-          toLogin()
-        }, 2000)
-      } else {
+      // 模拟请求，需根据实际开发进行修改
+      setTimeout(() => {
+        ElMessage.success(t('login.passwordUpdateReg'))
         loading.value = false
-        ElMessage.warning(t('login.tickPrivacy'))
-      }
+      }, 2000)
     } else {
       loading.value = false
       return fields
@@ -63,7 +53,7 @@ const loginRegister = async (formEl: FormInstance | undefined) => {
   })
 }
 
-const toLogin = () => {
+function onBack() {
   useVerifyCode().end()
   useUserStoreHook().SET_CURRENTPAGE(0)
 }
@@ -72,28 +62,10 @@ const toLogin = () => {
 <template>
   <div>
     <div class="flex-c mb-3">
-      <h2 class="text-2xl font-bold text-center">{{ t('login.register') }}</h2>
+      <h2 class="text-2xl font-bold text-center">{{ t('login.forgetPass') }}</h2>
     </div>
     <el-form ref="ruleFormRef" :model="ruleForm" :rules="updateRules" size="large">
       <Motion>
-        <el-form-item
-          :rules="[
-            {
-              required: true,
-              message: t('login.usernameReg'),
-              trigger: 'blur'
-            }
-          ]"
-          prop="username">
-          <el-input
-            clearable
-            v-model="ruleForm.username"
-            :placeholder="t('login.username')"
-            :prefix-icon="useRenderIcon(User)" />
-        </el-form-item>
-      </Motion>
-
-      <Motion :delay="100">
         <el-form-item prop="phone">
           <el-input
             clearable
@@ -103,7 +75,7 @@ const toLogin = () => {
         </el-form-item>
       </Motion>
 
-      <Motion :delay="150">
+      <Motion :delay="100">
         <el-form-item prop="verifyCode">
           <div class="w-full flex justify-between">
             <el-input
@@ -120,7 +92,8 @@ const toLogin = () => {
           </div>
         </el-form-item>
       </Motion>
-      <Motion :delay="200">
+
+      <Motion :delay="150">
         <el-form-item prop="password">
           <el-input
             clearable
@@ -131,7 +104,7 @@ const toLogin = () => {
         </el-form-item>
       </Motion>
 
-      <Motion :delay="250">
+      <Motion :delay="200">
         <el-form-item :rules="repeatPasswordRule" prop="repeatPassword">
           <el-input
             clearable
@@ -142,34 +115,23 @@ const toLogin = () => {
         </el-form-item>
       </Motion>
 
-      <Motion :delay="300">
-        <el-form-item>
-          <el-checkbox v-model="checked">
-            {{ t('login.readAccept') }}
-          </el-checkbox>
-          <el-button link type="primary">
-            {{ t('login.privacyPolicy') }}
-          </el-button>
-        </el-form-item>
-      </Motion>
-
-      <Motion :delay="350">
+      <Motion :delay="250">
         <el-form-item>
           <el-button
             class="w-full"
             size="default"
             type="primary"
             :loading="loading"
-            @click="loginRegister(ruleFormRef)">
-            {{ t('login.register') }}
+            @click="onUpdate(ruleFormRef)">
+            {{ t('login.definite') }}
           </el-button>
         </el-form-item>
       </Motion>
 
-      <Motion :delay="400">
+      <Motion :delay="300">
         <el-form-item>
-          <el-button class="w-full" size="default" @click="toLogin">
-            {{ t('login.hasUser') }}
+          <el-button class="w-full" size="default" @click="onBack">
+            {{ t('login.back') }}
           </el-button>
         </el-form-item>
       </Motion>

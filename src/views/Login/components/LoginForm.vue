@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref, watch, computed } from 'vue'
 import { useI18n } from '@/hooks/web/useI18n'
+import Motion from '../utils/motion'
 import type { FormInstance } from 'element-plus'
 import { useAppStoreHook } from '@/store/modules/app'
 import { useUserStoreHook } from '@/store/modules/user'
@@ -18,7 +19,6 @@ import { getTestRoleApi, getAdminRoleApi } from '@/api/login'
 import Lock from '@iconify-icons/ri/lock-fill'
 import User from '@iconify-icons/ri/user-3-fill'
 // import { useValidator } from '@/utils/validate'
-
 // const { required } = useValidator()
 
 const ruleForm = reactive({
@@ -112,17 +112,11 @@ const getRole = async () => {
 watch(imgCode, value => {
   useUserStoreHook().SET_VERIFYCODE(value)
 })
-// // 去注册页面
-// const toRegister = () => {
-//   emit('to-register')
-// }
-
-// const emit = defineEmits(['to-register'])
 </script>
 
 <template>
   <div>
-    <div class="flex justify-center items-center mb-3">
+    <div class="flex-c mb-3">
       <h2 class="text-2xl font-bold text-center">{{ t('login.login') }}</h2>
     </div>
     <el-form ref="ruleFormRef" :model="ruleForm" :rules="loginRules" size="large">
@@ -169,7 +163,7 @@ watch(imgCode, value => {
       </Motion>
       <Motion :delay="250">
         <el-form-item>
-          <div class="w-full h-[20px] flex justify-between items-center">
+          <div class="w-full h-[20px] flex-bc">
             <el-checkbox v-model="checked">
               {{ t('login.remember') }}
             </el-checkbox>
@@ -222,9 +216,7 @@ watch(imgCode, value => {
 </template>
 
 <style lang="scss" scoped>
-:deep(.anticon) {
-  &:hover {
-    color: var(--el-color-primary) !important;
-  }
+:deep(.el-input-group__append) {
+  padding: 0;
 }
 </style>

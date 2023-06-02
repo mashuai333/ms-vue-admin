@@ -115,12 +115,14 @@ login:
   verifyCode: 验证码
   remember: 记住密码
   sure: 确认密码
+  forgetPass: 忘记密码
   forget: 忘记密码?
   login: 登录
   thirdLogin: 第三方登录
   phoneLogin: 手机登录
   qRCodeLogin: 二维码登录
   register: 注册
+  hasUser: 已有账号? 去登录
   weChatLogin: 微信登录
   alipayLogin: 支付宝登录
   qqLogin: QQ登录

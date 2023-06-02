@@ -56,11 +56,12 @@ import {
   ElRadioButton,
   // 指令
   ElLoading,
-  ElInfiniteScroll
+  ElInfiniteScroll,
+  ElMessage
 } from 'element-plus'
 
 // Directives
-const plugins = [ElLoading, ElInfiniteScroll]
+const plugins = [ElLoading, ElInfiniteScroll, ElMessage]
 
 const components = [
   ElButton,

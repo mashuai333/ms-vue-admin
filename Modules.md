@@ -75,3 +75,7 @@ pnpm install @element-plus/icons-vue pnpm install @iconify/vue --dev pnpm instal
 ## 安装国际化
 
 <https://vue-i18n.intlify.dev/guide/introduction.html> pnpm install vue-i18n@9 pnpm install --save-dev @intlify/unplugin-vue-i18n
+
+## 添加二维码
+
+pnpm install --save qrcode pnpm install @types/qrcode --save-dev

@@ -24,6 +24,7 @@ import store from './store'
 import svgIcon from '@/components/SvgIcon/index.vue'
 
 const app = createApp(App)
+// 自定义引入svg组件
 app.component('svg-icon', svgIcon)
 
 // import './permission'
@@ -45,7 +46,6 @@ const setupAll = async () => {
     // .use(useElementPlus)
     .use(router)
     .use(store)
-    // 自定义引入svg组件
     .use(MotionPlugin)
   app.mount('#app')
 }

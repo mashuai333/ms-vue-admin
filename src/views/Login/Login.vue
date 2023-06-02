@@ -1,24 +1,14 @@
 <script setup lang="ts">
-import { LoginForm } from './components'
+import { LoginForm, PhoneLogin, QrCode, RegisterForm, ForgetPass } from './components'
 import { ThemeSwitch } from '@/components/ThemeSwitch'
 import { LocaleDropdown } from '@/components/LocaleDropdown'
 import { useI18n } from '@/hooks/web/useI18n'
 import { underlineToHump } from '@/utils'
 import { useAppStoreHook } from '@/store/modules/app'
-import { ref } from 'vue'
-
+import { useUserStoreHook } from '@/store/modules/user'
 const appStore = useAppStoreHook()
+const userStore = useUserStoreHook()
 const { t } = useI18n()
-
-const isLogin = ref(true)
-
-const toRegister = () => {
-  isLogin.value = false
-}
-
-// const toLogin = () => {
-//   isLogin.value = true
-// }
 </script>
 
 <template>
@@ -57,13 +47,20 @@ const toRegister = () => {
         <Transition appear enter-active-class="animate__animated animate__bounceInRight">
           <div class="h-[calc(100vh-72px)] flex items-center m-auto w-[100%] max-w-500px">
             <LoginForm
-              v-if="isLogin"
-              class="p-5 h-auto m-auto xl:(rounded-3xl light:bg-white)"
-              @to-register="toRegister" />
-            <!-- <RegisterForm
-              v-else
-              class="p-20px h-auto m-auto <xl:(rounded-3xl light:bg-white)"
-              @to-login="toLogin" /> -->
+              v-if="userStore.currentPage === 0"
+              class="p-5 h-auto m-auto xl:(rounded-3xl light:bg-white)" />
+            <PhoneLogin
+              v-if="userStore.currentPage === 1"
+              class="p-5 h-auto m-auto xl:(rounded-3xl light:bg-white)" />
+            <QrCode
+              v-if="userStore.currentPage === 2"
+              class="p-5 h-auto m-auto w-[380px] xl:(rounded-3xl light:bg-white)" />
+            <RegisterForm
+              v-if="userStore.currentPage === 3"
+              class="p-5 h-auto m-auto xl:(rounded-3xl light:bg-white)" />
+            <ForgetPass
+              v-if="userStore.currentPage === 4"
+              class="p-5 h-auto m-auto xl:(rounded-3xl light:bg-white)" />
           </div>
         </Transition>
       </div>
