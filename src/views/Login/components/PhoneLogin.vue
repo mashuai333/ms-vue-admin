@@ -47,7 +47,7 @@ function onBack() {
     <div class="flex-c mb-3">
       <h2 class="text-2xl font-bold text-center">{{ t('login.phoneLogin') }}</h2>
     </div>
-    <el-form ref="ruleFormRef" :model="ruleForm" :rules="phoneRules" size="large">
+    <el-form ref="ruleFormRef" class="w-[350px]" :model="ruleForm" :rules="phoneRules" size="large">
       <Motion>
         <el-form-item prop="phone">
           <el-input

@@ -151,3 +151,24 @@ login:
   passwordSureReg: Please enter confirm password
   passwordDifferentReg: The two passwords do not match!
   passwordUpdateReg: Password has been updated
+router:
+  dashboard: Dashboard
+  analysis: Analysis
+  workplace: Workplace
+  component: Component
+  editor: Editor
+  richText: Rich text
+richText:
+    richText: Rich text
+    richTextDes: Secondary packaging based on wangeditor
+size:
+    default: Default
+    large: Large
+    small: Small
+common:
+    loginOutMessage: Exit the system?
+    reminder: Reminder
+    ok: OK
+    cancel: Cancel
+    document: Document
+    loginOut: Login out

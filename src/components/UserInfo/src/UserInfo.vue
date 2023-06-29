@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElMessageBox } from 'element-plus'
-// import { useI18n } from '@/hooks/web/useI18n'
+import { ElMessageBox } from 'element-plus'
+import { useI18n } from '@/hooks/web/useI18n'
 import { useCache } from '@/hooks/web/useCache'
 import { resetRouter } from '@/router'
 import { useRouter } from 'vue-router'
@@ -9,16 +9,16 @@ import { useTagsViewStore } from '@/store/modules/tagsView'
 
 const tagsViewStore = useTagsViewStore()
 
-// const { t } = useI18n()
+const { t } = useI18n()
 
 const { wsCache } = useCache()
 
 const { replace } = useRouter()
 
 const loginOut = () => {
-  ElMessageBox.confirm('common.loginOutMessage', 'common.reminder', {
-    confirmButtonText: 'common.ok',
-    cancelButtonText: 'common.cancel',
+  ElMessageBox.confirm(t('common.loginOutMessage'), t('common.reminder'), {
+    confirmButtonText: t('common.ok'),
+    cancelButtonText: t('common.cancel'),
     type: 'warning'
   })
     .then(async () => {
@@ -32,7 +32,6 @@ const loginOut = () => {
     })
     .catch(() => {})
 }
-
 const toDocument = () => {
   window.open('https://element-plus-admin-doc.cn/')
 }
@@ -50,10 +49,10 @@ const toDocument = () => {
     <template #dropdown>
       <ElDropdownMenu>
         <ElDropdownItem>
-          <div @click="toDocument">{{ 'common.document' }}</div>
+          <div @click="toDocument">{{ t('common.document') }}</div>
         </ElDropdownItem>
         <ElDropdownItem divided>
-          <div @click="loginOut">{{ 'common.loginOut' }}</div>
+          <div @click="loginOut">{{ t('common.loginOut') }}</div>
         </ElDropdownItem>
       </ElDropdownMenu>
     </template>

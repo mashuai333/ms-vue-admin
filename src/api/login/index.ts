@@ -15,7 +15,7 @@ export const loginOutApi = (): Promise<IResponse> => {
 
 /** 刷新token */
 export const refreshTokenApi = (data?: object): Promise<IResponse<RefreshTokenResult>> => {
-  return request.post({ url: 'user/refreshToken', data })
+  return request.post({ url: '/user/refreshToken', data })
 }
 
 export const getUserListApi = ({ params }: AxiosConfig) => {

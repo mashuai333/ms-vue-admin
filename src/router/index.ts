@@ -1,12 +1,15 @@
 import { Router, createRouter, RouteRecordRaw, createWebHashHistory } from 'vue-router'
-import { Layout } from '@/utils/routerHelper'
+import type { App } from 'vue'
+import { Layout, getParentLayout } from '@/utils/routerHelper'
+import { useI18n } from '@/hooks/web/useI18n'
 
+const { t } = useI18n()
 export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/',
     name: 'Root',
     component: Layout,
-    redirect: '/dashboard/map',
+    redirect: '/dashboard',
     meta: {
       hidden: true
     }
@@ -57,29 +60,6 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
       title: '404',
       noTagsView: true
     }
-  },
-  {
-    path: '/dashboard',
-    component: Layout,
-    redirect: '/dashboard/map',
-    name: 'Dashboard',
-    meta: {
-      title: '首页',
-      icon: 'ant-design:dashboard-filled',
-      alwaysShow: true
-    },
-    children: [
-      {
-        path: 'map',
-        component: () => import('@/views/geoGdMap/index.vue'),
-        name: 'map',
-        meta: {
-          title: '高德地图',
-          noCache: true,
-          affix: false
-        }
-      }
-    ]
   }
 ]
 
@@ -87,24 +67,45 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/dashboard',
     component: Layout,
-    redirect: '/dashboard/map',
+    redirect: '/dashboard/analysis',
     name: 'Dashboard',
     meta: {
-      title: '首页',
+      title: t('router.dashboard'),
       icon: 'ant-design:dashboard-filled',
       alwaysShow: true
     },
     children: [
-      // {
-      //   path: 'analysis',
-      //   component: () => import('@/views/Dashboard/Analysis.vue'),
-      //   name: 'Analysis',
-      //   meta: {
-      //     title: '分析页',
-      //     noCache: true,
-      //     affix: true
-      //   }
-      // },
+      {
+        path: 'analysis',
+        component: () => import('@/views/Dashboard/Analysis.vue'),
+        name: 'Analysis',
+        meta: {
+          title: t('router.analysis'),
+          noCache: true,
+          affix: true
+        }
+      },
+      {
+        path: 'workplace',
+        component: () => import('@/views/Dashboard/Workplace.vue'),
+        name: 'Workplace',
+        meta: {
+          title: t('router.workplace'),
+          noCache: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/components',
+    component: Layout,
+    name: 'ComponentsDemo',
+    meta: {
+      title: t('router.component'),
+      icon: 'bx:bxs-component',
+      alwaysShow: true
+    },
+    children: [
       {
         path: 'map',
         component: () => import('@/views/geoGdMap/index.vue'),
@@ -114,6 +115,26 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           noCache: true,
           affix: false
         }
+      },
+      {
+        path: 'editor-demo',
+        component: getParentLayout(),
+        redirect: '/components/editor-demo/editor',
+        name: 'EditorDemo',
+        meta: {
+          title: t('router.editor'),
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'editor',
+            component: () => import('@/views/Components/Editor/Editor.vue'),
+            name: 'Editor',
+            meta: {
+              title: t('router.richText')
+            }
+          }
+        ]
       }
     ]
   }
@@ -146,6 +167,10 @@ export const resetRouter = (): void => {
       router.hasRoute(name) && router.removeRoute(name)
     }
   })
+}
+
+export const setupRouter = (app: App<Element>) => {
+  app.use(router)
 }
 
 export default router

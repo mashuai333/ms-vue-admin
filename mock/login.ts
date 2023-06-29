@@ -3,12 +3,13 @@ import { MockMethod } from 'vite-plugin-mock'
 
 export default [
   {
-    url: '/login',
+    url: '/user/login',
     method: 'post',
     response: ({ body }) => {
       if (body.username === 'admin') {
         return {
           success: true,
+          code: 200,
           data: {
             username: 'admin',
             // 一个用户可能有多个角色
@@ -21,6 +22,7 @@ export default [
       } else {
         return {
           success: true,
+          code: 200,
           data: {
             username: 'common',
             // 一个用户可能有多个角色

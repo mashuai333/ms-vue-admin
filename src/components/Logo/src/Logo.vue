@@ -55,7 +55,7 @@ watch(
       :class="[
         'v-logo',
         layout !== 'classic' ? `v-logo__Top` : '',
-        'flex !h-[var(--logo-height)] items-center cursor-pointer pl-8px relative',
+        'flex !h-[var(--logo-height)] items-center cursor-pointer pl-[8px] relative',
         'dark:bg-[var(--el-bg-color)]'
       ]"
       to="/">
@@ -65,7 +65,7 @@ watch(
       <div
         v-if="show"
         :class="[
-          'ml-10px text-16px font-700',
+          'ml-[10px] text-base font-bold',
           {
             'text-[var(--logo-title-text-color)]': layout === 'classic',
             'text-[var(--top-header-text-color)]':

@@ -74,7 +74,12 @@ const toLogin = () => {
     <div class="flex-c mb-3">
       <h2 class="text-2xl font-bold text-center">{{ t('login.register') }}</h2>
     </div>
-    <el-form ref="ruleFormRef" :model="ruleForm" :rules="updateRules" size="large">
+    <el-form
+      ref="ruleFormRef"
+      class="w-[350px]"
+      :model="ruleForm"
+      :rules="updateRules"
+      size="large">
       <Motion>
         <el-form-item
           :rules="[

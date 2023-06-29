@@ -79,3 +79,7 @@ pnpm install @element-plus/icons-vue pnpm install @iconify/vue --dev pnpm instal
 ## 添加二维码
 
 pnpm install --save qrcode pnpm install @types/qrcode --save-dev
+
+## 添加 wangEditor
+
+yarn add @wangeditor/editor pnpm install @wangeditor/editor --save yarn add @wangeditor/editor-for-vue@next pnpm install @wangeditor/editor-for-vue@next --save

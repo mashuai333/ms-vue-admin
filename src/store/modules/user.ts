@@ -41,10 +41,11 @@ export const useUserStore = defineStore('user', {
     async loginByUsername(data) {
       return new Promise<UserResult>((resolve, reject) => {
         loginApi(data)
-          .then(data => {
-            if (data) {
-              setToken(data.data)
-              resolve(data.data)
+          .then(res => {
+            if (res) {
+              console.log(res)
+              setToken(data)
+              resolve(data)
             }
           })
           .catch(error => {

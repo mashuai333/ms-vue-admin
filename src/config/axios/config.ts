@@ -14,7 +14,7 @@ const config: {
    */
   base_url: {
     // 开发环境接口前缀
-    dev: '/api',
+    dev: '/',
     // 测试环境接口前缀
     test: '/app',
     // 打包生产环境接口前缀
@@ -24,12 +24,12 @@ const config: {
   /**
    * 接口成功返回状态码
    */
-  result_code: 20000,
+  result_code: 200,
 
   /**
    * 接口失败返回状态码
    */
-  fail_result_code: 20001,
+  fail_result_code: 201,
 
   /**
    * 接口请求超时时间

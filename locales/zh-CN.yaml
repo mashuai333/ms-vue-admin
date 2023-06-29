@@ -151,3 +151,24 @@ login:
   passwordSureReg: 请输入确认密码
   passwordDifferentReg: 两次密码不一致!
   passwordUpdateReg: 修改密码成功
+router:
+  dashboard: 首页
+  analysis: 分析页
+  workplace: 工作台
+  component: 组件
+  editor: 编辑器
+  richText: 富文本
+richText:
+    richText: 富文本
+    richTextDes: 基于 wangeditor 二次封装
+size:
+    default: 默认
+    large: 大
+    small: 小
+common:
+    loginOutMessage: 是否退出本系统？
+    reminder: 温馨提示
+    ok: 确定
+    cancel: 取消
+    document: 项目文档
+    loginOut: 退出系统

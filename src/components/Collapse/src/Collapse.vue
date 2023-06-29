@@ -19,11 +19,10 @@ const toggleCollapse = () => {
 
 <template>
   <div class="v-collapse">
-    <Icon
-      :size="18"
+    <IconifyIconOnline
       :icon="collapse ? 'ant-design:menu-unfold-outlined' : 'ant-design:menu-fold-outlined'"
       :color="color"
-      class="cursor-pointer"
+      class="cursor-pointer text-lg"
       @click="toggleCollapse" />
   </div>
 </template>

@@ -15,8 +15,9 @@ const toggleFullscreen = () => {
 
 <template>
   <div class="v-screenfull" @click="toggleFullscreen">
-    <el-icon>
-      <svg-icon :icon="isFullscreen ? 'exit-fullscreen' : 'fullscreen'" :color="color" />
-    </el-icon>
+    <IconifyIconOnline
+      class="cursor-pointer text-lg"
+      :icon="isFullscreen ? 'zmdi:fullscreen-exit' : 'zmdi:fullscreen'"
+      :color="color" />
   </div>
 </template>

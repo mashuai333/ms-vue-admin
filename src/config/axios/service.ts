@@ -8,9 +8,9 @@ import axios, {
 import qs from 'qs'
 import { config } from './config'
 import { ElMessage } from 'element-plus'
-import { useUserStore } from '@/store/modules/user'
+// import { useUserStore } from '@/store/modules/user'
 import myCookies from '@/utils/customCookies'
-import router from '@/router'
+// import router from '@/router'
 import { useDebounceFn } from '@vueuse/core'
 
 const { result_code, fail_result_code, base_url } = config
@@ -72,10 +72,10 @@ service.interceptors.response.use(
     // 导出  405, "文件下载失败"
     // 导入  406, "文件读取失败"
     // 导入  407, "文件类型不符合请重新选择"
-    // 正常 20000
-    // 失败 20001
-    // warning提示 20002
-    // 处理设备周期启用停用状态提示 20003
+    // 正常 200
+    // 失败 201
+    // warning提示 202
+    // 处理设备周期启用停用状态提示 203
     if (response.config.responseType === 'blob') {
       // 如果是文件流，直接过
       return response
@@ -84,7 +84,7 @@ service.interceptors.response.use(
     } else if (code === fail_result_code) {
       ElMessage.error(message)
       return Promise.reject(response)
-    } else if (code === 20003) {
+    } else if (code === 203) {
       ElMessage.warning(message)
       return response.data
     } else if (code === 401 || code === 402 || code === 403) {
@@ -92,19 +92,19 @@ service.interceptors.response.use(
     } else if (code === 404) {
       // 登录定义状态 token过期
       useDebounceFn(() => {
-        const userStore = useUserStore()
-        userStore.resetCookies()
+        // const userStore = useUserStore()
+        // userStore.resetCookies()
         ElMessage({
           message: message,
           duration: 2000,
           type: 'warning',
           showClose: true
         })
-        router.push({ path: '/thirdLogin' })
+        // router.push({ path: '/thirdLogin' })
       }, 1500)
       return Promise.resolve(response)
     } else {
-      //20002
+      //202
       ElMessage.warning(message)
       return Promise.reject()
     }

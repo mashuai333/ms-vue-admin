@@ -38,6 +38,7 @@ app.config.errorHandler = (err, vm, info) => {
   // handle error
   console.log('[全局异常]', err, vm, info)
 }
+import './permission'
 
 const setupAll = async () => {
   await setupI18n(app)
