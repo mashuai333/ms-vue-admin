@@ -40,3 +40,7 @@ export const findIndex = <T = Recordable>(ary: Array<T>, fn: Fn): number => {
   })
   return index
 }
+
+export const trim = (str: string) => {
+  return str.replace(/(^\s*)|(\s*$)/g, '')
+}

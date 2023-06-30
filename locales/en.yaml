@@ -131,7 +131,7 @@ login:
   smsVerifyCode: SMS VerifyCode
   back: Back
   test: Mock Test
-  tip: After scanning the code, click "Confirm" to complete the login
+  tip: After scanning the code click "Confirm" to complete the login
   definite: Definite
   loginSuccess: Login Success
   registerSuccess: Regist Success
@@ -172,3 +172,33 @@ common:
     cancel: Cancel
     document: Document
     loginOut: Login out
+setting:
+    projectSetting: Project setting
+    theme: Theme
+    layout: Layout
+    systemTheme: System theme
+    menuTheme: Menu theme
+    interfaceDisplay: Interface display
+    breadcrumb: Breadcrumb
+    breadcrumbIcon: Breadcrumb icon
+    collapseMenu: Collapse menu
+    hamburgerIcon: Hamburger icon
+    screenfullIcon: Screenfull icon
+    sizeIcon: Size icon
+    localeIcon: Locale icon
+    tagsView: Tags view
+    logo: Logo
+    greyMode: Grey mode
+    fixedHeader: Fixed header
+    headerTheme: Header theme
+    cutMenu: Cut Menu
+    copy: Copy
+    clearAndReset: Clear cache and reset
+    copySuccess: Copy success
+    copyFailed: Copy failed
+    footer: Footer
+    uniqueOpened: Unique opened
+    tagsViewIcon: Tags view icon
+    dynamicRouter: Dynamic router
+    reExperienced: Please exit the login experience again
+    fixedMenu: Fixed menu

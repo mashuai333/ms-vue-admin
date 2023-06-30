@@ -6,10 +6,10 @@ import { usePermissionStore } from '@/store/modules/permission'
 import { filterBreadcrumb } from './helper'
 import { filter, treeToList } from '@/utils/tree'
 import type { RouteLocationNormalizedLoaded, RouteMeta } from 'vue-router'
-// import { useI18n } from '@/hooks/web/useI18n'
-// import { Icon } from '@/components/Icon'
+import { useI18n } from '@/hooks/web/useI18n'
 import { useAppStore } from '@/store/modules/app'
-import { useRenderIcon } from '@/components/ReIcon/src/hooks'
+import { IconifyIconOnline } from '@/components/ReIcon'
+
 const appStore = useAppStore()
 
 // 面包屑图标
@@ -20,7 +20,7 @@ export default defineComponent({
   setup() {
     const { currentRoute } = useRouter()
 
-    // const { t } = useI18n()
+    const { t } = useI18n()
 
     const levelList = ref<AppRouteRecordRaw[]>([])
 
@@ -47,10 +47,13 @@ export default defineComponent({
           <ElBreadcrumbItem to={{ path: disabled ? '' : v.path }} key={v.name}>
             {meta?.icon && breadcrumbIcon.value ? (
               <>
-                <useRenderIcon icon={meta.icon} class="mr-[5px]"></useRenderIcon> {v?.meta?.title}
+                <el-icon size="20">
+                  <IconifyIconOnline icon={meta.icon} class="mr-[5px]" />
+                </el-icon>
+                {t(v?.meta?.title)}
               </>
             ) : (
-              v?.meta?.title
+              t(v?.meta?.title)
             )}
           </ElBreadcrumbItem>
         )
@@ -83,7 +86,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .el-breadcrumb {
-  :deep(&__item) {
+  :deep(.el-breadcrumb__item) {
     display: flex;
 
     .el-breadcrumb__inner {
@@ -97,7 +100,7 @@ export default defineComponent({
     }
   }
 
-  :deep(&__item):not(:last-child) {
+  :deep(.el-breadcrumb__item):not(:last-child) {
     .el-breadcrumb__inner {
       color: var(--top-header-text-color);
 
@@ -107,7 +110,7 @@ export default defineComponent({
     }
   }
 
-  :deep(&__item):last-child {
+  :deep(.el-breadcrumb__item):last-child {
     .el-breadcrumb__inner {
       color: var(--el-text-color-placeholder);
 

@@ -5,13 +5,13 @@ import { LocaleDropdown } from '@/components/LocaleDropdown'
 import { SizeDropdown } from '@/components/SizeDropdown'
 import { UserInfo } from '@/components/UserInfo'
 import { Screenfull } from '@/components/Screenfull'
-// import { Breadcrumb } from '@/components/Breadcrumb'
+import { Breadcrumb } from '@/components/Breadcrumb'
 import { useAppStore } from '@/store/modules/app'
 
 const appStore = useAppStore()
 
 // 面包屑
-// const breadcrumb = computed(() => appStore.getBreadcrumb)
+const breadcrumb = computed(() => appStore.getBreadcrumb)
 
 // 折叠图标
 const hamburger = computed(() => appStore.getHamburger)
@@ -44,6 +44,7 @@ export default defineComponent({
             {hamburger.value && layout.value !== 'cutMenu' ? (
               <Collapse class="hover-trigger" color="var(--top-header-text-color)"></Collapse>
             ) : undefined}
+            {breadcrumb.value ? <Breadcrumb class="<md:hidden"></Breadcrumb> : undefined}
           </div>
         ) : undefined}
         <div class="h-full flex items-center">

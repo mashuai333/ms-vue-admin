@@ -34,5 +34,16 @@ export default [
         }
       }
     }
+  },
+  {
+    url: '/user/loginOut',
+    method: 'get',
+    response: () => {
+      return {
+        success: true,
+        code: 200,
+        data: 'success'
+      }
+    }
   }
 ] as MockMethod[]
