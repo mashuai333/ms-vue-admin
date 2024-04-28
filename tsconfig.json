@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "target": "esnext",
+    "useDefineForClassFields": true,
     "module": "esnext",
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
     "strict": false,
     "jsx": "preserve",
     "importHelpers": true,
@@ -32,8 +33,7 @@
     },
     "types": [
       "node",
-      "vite/client",
-      "element-plus/global"
+      "vite/client"
     ],
     "typeRoots": [
       "./node_modules/@types/",
