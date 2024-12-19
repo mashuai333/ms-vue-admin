@@ -17,14 +17,14 @@ const props = defineProps({
 })
 
 const state = reactive({
-  width: 0, // 大屏真实宽度
-  height: 0, // 大屏真实高度
+  trueWidth: 0, // 大屏真实宽度
+  trueHeight: 0, // 大屏真实高度
   originalWidth: 0, // 窗口原始宽度
   originalHeight: 0, // 窗口原始高度
   zoomContainer: null
 })
 
-const { zoomContainer, width, height, originalWidth, originalHeight } = toRefs(state)
+const { zoomContainer, trueWidth, trueHeight, originalWidth, originalHeight } = toRefs(state)
 
 const Debounce = (fn: Function, t: number) => {
   const delay = t || 500
@@ -43,12 +43,12 @@ const Debounce = (fn: Function, t: number) => {
 const initSize = () => {
   return new Promise<void>(resolve => {
     if (props.width && props.height) {
-      width.value = props.width
-      height.value = props.height
+      trueWidth.value = props.width
+      trueHeight.value = props.height
     } else {
       // 若未传递大屏真实尺寸，则获取容器被内容撑满后的尺寸 作为大屏真实尺寸
-      width.value = zoomContainer.value.clientWidth
-      height.value = zoomContainer.value.clientHeight
+      trueWidth.value = zoomContainer.value.clientWidth
+      trueHeight.value = zoomContainer.value.clientHeight
     }
     // 获取窗口原始尺寸
     if (!originalWidth.value || !originalHeight.value) {
@@ -59,9 +59,9 @@ const initSize = () => {
   })
 }
 const updateSize = () => {
-  if (width.value && height.value) {
-    zoomContainer.value.style.width = `${width.value}px`
-    zoomContainer.value.style.height = `${height.value}px`
+  if (trueWidth.value && trueHeight.value) {
+    zoomContainer.value.style.width = `${trueWidth.value}px`
+    zoomContainer.value.style.height = `${trueHeight.value}px`
   }
 }
 const updateScale = () => {
@@ -69,8 +69,8 @@ const updateScale = () => {
   const currentWidth = document.body.clientWidth
   const currentHeight = document.body.clientHeight
   // 获取大屏最终宽高， 若未获得大屏幕尺寸，则将屏幕视口原始尺寸作为大屏最终宽高
-  const realWidth = width.value || originalWidth.value
-  const realHeight = height.value || originalHeight.value
+  const realWidth = trueWidth.value || originalWidth.value
+  const realHeight = trueHeight.value || originalHeight.value
   // 计算宽高比
   const widthScale = currentWidth / realWidth
   const heightScale = currentHeight / realHeight

@@ -22,7 +22,7 @@ const props = defineProps({
 watch(
   () => props.setSymbol,
   data => {
-    setSymbol(data)
+    setSymbols(data)
   }
 )
 
@@ -250,7 +250,7 @@ const clearMarker = () => {
 }
 
 // 设置标记点
-const setSymbol = data => {
+const setSymbols = data => {
   if (data.isRender) {
     if (data.list && data.list.length) {
       for (let i = 0; i < data.list.length; i++) {
